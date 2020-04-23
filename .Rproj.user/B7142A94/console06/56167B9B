@@ -1,0 +1,7 @@
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$[Kbash-4.4$git status
+fatal: not a git repository (or any parent up to mount point /sfs/qumulo)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git init
+Initialized empty Git repository in /sfs/qumulo/qhome/tp2sk/Git/gates/.git/
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git remote add origin https://github.com/uva-bi-sdad/gates.git
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git add --all
