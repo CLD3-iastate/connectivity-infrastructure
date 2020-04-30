@@ -14,13 +14,18 @@ appdata <- readRDS("~/Git/gates/rivanna_data/working/appdata.Rds")
 
 # User interface
 ui <- fluidPage(theme = shinytheme("cosmo"),
+  headerPanel(img(src = "logo.png", class = "topimage", width = "50%", style = "display: block; margin-left: auto; margin-right: auto;")
+  ),
+  
+  fluidRow(width = 12, 
+           column(12, align = 'center', h2(strong("Computing Devices and Internet Connectivity Explorer")))
+  ),
+  
   tags$style(type  ="text/css",
              ".recalculating {opacity: 1.0;}"
   ),
   
   tags$head(tags$style(HTML(" .sidebar { font-size: 50%; } "))),
-  
-  titlePanel("Computing Devices and Internet Connectivity Explorer"),
   
   sidebarLayout(
     position = "left",

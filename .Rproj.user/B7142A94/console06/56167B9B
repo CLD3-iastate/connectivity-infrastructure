@@ -106,3 +106,44 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git add --all
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git commit -m "Created al[Kpp"
+g[master 4473911] Created app
+ 10 files changed, 418 insertions(+), 3 deletions(-)
+ rewrite .Rproj.user/B7142A94/console06/INDEX001 (86%)
+ delete mode 100644 .Rproj.user/B7142A94/sources/s-98f75b57/lock_file
+ create mode 120000 rivanna_data
+ create mode 100644 src/connect/01_getacs.R
+ create mode 100644 src/connect/app.R
+ create mode 100644 src/food/01_resatlas.R
+ rename src/{ => remotework}/remote_between.R (100%)
+ rename src/{ => remotework}/remote_purdue.R (100%)
+ rename src/{ => remotework}/remote_within.R (100%)
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git push origin master
+Username for 'https://github.com': tpristavec
+Password for 'https://tpristavec@github.com': 
+Counting objects: 14, done.
+Delta compression using up to 40 threads.
+Compressing objects:   8% (1/12)   Compressing objects:  16% (2/12)   Compressing objects:  25% (3/12)   Compressing objects:  33% (4/12)   Compressing objects:  41% (5/12)   Compressing objects:  50% (6/12)   Compressing objects:  58% (7/12)   Compressing objects:  66% (8/12)   Compressing objects:  75% (9/12)   Compressing objects:  83% (10/12)   Compressing objects:  91% (11/12)   Compressing objects: 100% (12/12)   Compressing objects: 100% (12/12), done.
+Writing objects:   7% (1/14)   Writing objects:  14% (2/14)   Writing objects:  21% (3/14)   Writing objects:  28% (4/14)   Writing objects:  35% (5/14)   Writing objects:  42% (6/14)   Writing objects:  50% (7/14)   Writing objects:  57% (8/14)   Writing objects:  64% (9/14)   Writing objects:  71% (10/14)   Writing objects:  78% (11/14)   Writing objects:  85% (12/14)   Writing objects:  92% (13/14)   Writing objects: 100% (14/14)   Writing objects: 100% (14/14), 6.45 KiB | 1.29 MiB/s, done.
+Total 14 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/1)[Kremote: Resolving deltas: 100% (1/1)[Kremote: Resolving deltas: 100% (1/1), completed with 1 local object.[K
+To https://github.com/uva-bi-sdad/gates.git
+   f51274a..4473911  master -> master
+git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/B7142A94/console06/56167B9B[m
+	[31mmodified:   .Rproj.user/B7142A94/console06/INDEX001[m
+	[31mmodified:   src/connect/app.R[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31msrc/connect/www/[m
+	[31msrc/dashboard/[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git add --all
