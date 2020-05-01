@@ -117,6 +117,31 @@ iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
                             nocomputerQuint = ntile(nocomputer, 5),
                             ink12Quint = ntile(ink12, 5))
 
+# Get cutoffs for table
+vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqink12 <- quantile(vadata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+
+vaquintcuts <- bind_rows(vaqnoint, vaqnocomp, vaqink12)
+vaquintcuts$id <- c("No internet", "No computer", "In K12")
+vaquintcuts
+
+iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqink12 <- quantile(iadata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+
+iaquintcuts <- bind_rows(iaqnoint, iaqnocomp, iaqink12)
+iaquintcuts$id <- c("No internet", "No computer", "In K12")
+iaquintcuts
+
+orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqink12 <- quantile(ordata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+
+orquintcuts <- bind_rows(orqnoint, orqnocomp, orqink12)
+orquintcuts$id <- c("No internet", "No computer", "In K12")
+orquintcuts
+
 # Did they place in 4 or 5th quintile?
 vadata <- vadata %>% mutate(nointernetTop = ifelse(nointernetQuint >= 4, 1, 0),
                             nocomputerTop = ifelse(nocomputerQuint >= 4, 1, 0),
@@ -175,7 +200,7 @@ ggplot() +
         legend.position = "left",
         plot.caption.position = "plot",
         plot.title.position = "plot") +
-  scale_fill_viridis(name = "Vulnerability", guide = "legend", discrete = T) 
+  scale_fill_viridis(name = "Relative\nVulnerability", guide = "legend", discrete = T) 
 
 # Plot Virginia
 ggplot() +
@@ -197,7 +222,7 @@ ggplot() +
         legend.position = "left",
         plot.caption.position = "plot",
         plot.title.position = "plot") +
-  scale_fill_viridis(name = "Vulnerability", guide = "legend", discrete = T)
+  scale_fill_viridis(name = "Relative\nVulnerability", guide = "legend", discrete = T)
 
 # Plot Oregon
 ggplot() +
@@ -219,4 +244,4 @@ ggplot() +
         legend.position = "left",
         plot.caption.position = "plot",
         plot.title.position = "plot") +
-  scale_fill_viridis(name = "Vulnerability", guide = "legend", discrete = T) 
+  scale_fill_viridis(name = "Relative\nVulnerability", guide = "legend", discrete = T) 
