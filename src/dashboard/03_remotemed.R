@@ -7,6 +7,7 @@ library(ggthemes)
 library(viridis)
 library(scales)
 library(naniar)
+library(readr)
 
 census_api_key("548d39e0315b591a0e9f5a8d9d6c1f22ea8fafe0") # Teja's key
 
@@ -178,7 +179,6 @@ orquintcuts <- bind_rows(orqnoint, orqnocomp, orqpoorment, orqnumprov, orqunins)
 orquintcuts$id <- c("No internet", "No computer", "Num poor mental health", "Num mental health prov", "Pct uninsured")
 orquintcuts
 
-
 # Did they place in 4 or 5th quintile? 
 # This handles NAs. Value ends up being NA.
 vadata <- vadata %>% mutate(nointernetTop = ifelse(nointernetQuint >= 4, 1, 0),
@@ -230,6 +230,11 @@ ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + menthdaysTop + menthprovTop + uninsTop == 1 ~ "Very Low",
   nointernetTop + nocomputerTop + menthdaysTop + menthprovTop + uninsTop == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Very Low", "Low", "Medium", "High", "Very High"), ordered = TRUE)
+
+# Write out
+write_rds(iadata, "./rivanna_data/working/dashboard/ia_med.Rds")
+write_rds(vadata, "./rivanna_data/working/dashboard/va_med.Rds")
+write_rds(ordata, "./rivanna_data/working/dashboard/or_med.Rds")
 
 # Plot Iowa
 ggplot() +

@@ -6,6 +6,7 @@ library(ggplot2)
 library(ggthemes)
 library(viridis)
 library(scales)
+library(readr)
 
 
 census_api_key("548d39e0315b591a0e9f5a8d9d6c1f22ea8fafe0") # Teja's key
@@ -179,6 +180,11 @@ ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 1 ~ "Low",      
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
+
+# Write out
+write_rds(iadata, "./rivanna_data/working/dashboard/ia_edu.Rds")
+write_rds(vadata, "./rivanna_data/working/dashboard/va_edu.Rds")
+write_rds(ordata, "./rivanna_data/working/dashboard/or_edu.Rds")
 
 # Plot Iowa
 ggplot() +
