@@ -169,9 +169,9 @@ data <- acsdata %>% transmute(
   AWATER = AWATER, 
   geometry = geometry,
   # internet access (only dial up/only cellular/only satellite/none : total)
-  internet = (B28002_003E + B28002_006E + B28002_010E + B28002_013E) / B28002_001E,
+  nointernet = (B28002_003E + B28002_006E + B28002_010E + B28002_013E) / B28002_001E,
   # presence of computer for those in labor force (no computer employed + no computer unemployed : total in labor force)
-  computer = (B28007_008E + B28007_014E) / B28007_002E,
+  nocomputer = (B28007_008E + B28007_014E) / B28007_002E,
   # occupations (not-wfh-friendly occupations / total occupations that don't already WFH)
   occup = (B08124_010E + B08124_012E + B08124_013E + B08124_014E + B08124_017E +
              B08124_019E + B08124_020E + B08124_021E + B08124_024E + B08124_026E +
@@ -199,24 +199,24 @@ ordata <- data %>% filter(STATEFP == 41)
 #
 
 # Find quintiles:
-vadata <- vadata %>% mutate(internetQuint = ntile(internet, 5),
-                            computerQuint = ntile(computer, 5),
+vadata <- vadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
+                            nocomputerQuint = ntile(nocomputer, 5),
                             occupQuint = ntile(occup, 5),
                             industrQuint = ntile(industr, 5))
 
-ordata <- ordata %>% mutate(internetQuint = ntile(internet, 5),
-                            computerQuint = ntile(computer, 5),
+ordata <- ordata %>% mutate(nointernetQuint = ntile(nointernet, 5),
+                            nocomputerQuint = ntile(nocomputer, 5),
                             occupQuint = ntile(occup, 5),
                             industrQuint = ntile(industr, 5))
 
-iadata <- iadata %>% mutate(internetQuint = ntile(internet, 5),
-                            computerQuint = ntile(computer, 5),
+iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
+                            nocomputerQuint = ntile(nocomputer, 5),
                             occupQuint = ntile(occup, 5),
                             industrQuint = ntile(industr, 5))
 
 # Get cutoffs for table
-vaqint <- quantile(vadata$internet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqcomp <- quantile(vadata$computer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqcomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqoccup <- quantile(vadata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqind <- quantile(vadata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
@@ -224,8 +224,8 @@ vaquintcuts <- bind_rows(vaqint, vaqcomp, vaqoccup, vaqind)
 vaquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")
 vaquintcuts
 
-iaqint <- quantile(iadata$internet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqcomp <- quantile(iadata$computer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqcomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqoccup <- quantile(iadata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqind <- quantile(iadata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
@@ -233,8 +233,8 @@ iaquintcuts <- bind_rows(iaqint, iaqcomp, iaqoccup, iaqind)
 iaquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")
 iaquintcuts
 
-orqint <- quantile(ordata$internet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqcomp <- quantile(ordata$computer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqcomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqoccup <- quantile(ordata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqind <- quantile(ordata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
@@ -243,47 +243,47 @@ orquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")
 orquintcuts
 
 # Did they place in 4 or 5th quintile?
-vadata <- vadata %>% mutate(internetTop = ifelse(internetQuint >= 4, 1, 0),
-                            computerTop = ifelse(computerQuint >= 4, 1, 0),
+vadata <- vadata %>% mutate(nointernetTop = ifelse(nointernetQuint >= 4, 1, 0),
+                            nocomputerTop = ifelse(nocomputerQuint >= 4, 1, 0),
                             occupTop = ifelse(occupQuint >= 4, 1, 0),
                             industrTop = ifelse(industrQuint >= 4, 1, 0),
-                            scoreTop = internetTop + computerTop + occupTop + industrTop)
+                            scoreTop = nointernetTop + nocomputerTop + occupTop + industrTop)
 
-iadata <- iadata %>% mutate(internetTop = ifelse(internetQuint >= 4, 1, 0),
-                            computerTop = ifelse(computerQuint >= 4, 1, 0),
+iadata <- iadata %>% mutate(nointernetTop = ifelse(nointernetQuint >= 4, 1, 0),
+                            nocomputerTop = ifelse(nocomputerQuint >= 4, 1, 0),
                             occupTop = ifelse(occupQuint >= 4, 1, 0),
                             industrTop = ifelse(industrQuint >= 4, 1, 0),
-                            scoreTop = internetTop + computerTop + occupTop + industrTop)
+                            scoreTop = nointernetTop + nocomputerTop + occupTop + industrTop)
 
-ordata <- ordata %>% mutate(internetTop = ifelse(internetQuint >= 4, 1, 0),
-                            computerTop = ifelse(computerQuint >= 4, 1, 0),
+ordata <- ordata %>% mutate(nointernetTop = ifelse(nointernetQuint >= 4, 1, 0),
+                            nocomputerTop = ifelse(nocomputerQuint >= 4, 1, 0),
                             occupTop = ifelse(occupQuint >= 4, 1, 0),
                             industrTop = ifelse(industrQuint >= 4, 1, 0),
-                            scoreTop = internetTop + computerTop + occupTop + industrTop)
+                            scoreTop = nointernetTop + nocomputerTop + occupTop + industrTop)
 
 # Vulnerability  
 vadata <- vadata %>% mutate(vulnerability = case_when(
-  internetTop + computerTop + occupTop + industrTop == 4 ~ "Very High",
-  internetTop + computerTop + occupTop + industrTop == 3 ~ "High",
-  internetTop + computerTop + occupTop + industrTop == 2 ~ "Medium",       
-  internetTop + computerTop + occupTop + industrTop == 1 ~ "Low",   
-  internetTop + computerTop + occupTop + industrTop == 0 ~ "None"))
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "Low",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 vadata$vulnerability <- factor(vadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
 iadata <- iadata %>% mutate(vulnerability = case_when(
-  internetTop + computerTop + occupTop + industrTop == 4 ~ "Very High",
-  internetTop + computerTop + occupTop + industrTop == 3 ~ "High",
-  internetTop + computerTop + occupTop + industrTop == 2 ~ "Medium",       
-  internetTop + computerTop + occupTop + industrTop == 1 ~ "Low",   
-  internetTop + computerTop + occupTop + industrTop == 0 ~ "None"))
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "Low",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 iadata$vulnerability <- factor(iadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
 ordata <- ordata %>% mutate(vulnerability = case_when(
-  internetTop + computerTop + occupTop + industrTop == 4 ~ "Very High",
-  internetTop + computerTop + occupTop + industrTop == 3 ~ "High",
-  internetTop + computerTop + occupTop + industrTop == 2 ~ "Medium",       
-  internetTop + computerTop + occupTop + industrTop == 1 ~ "Low",   
-  internetTop + computerTop + occupTop + industrTop == 0 ~ "None"))
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "Low",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
 # Write out

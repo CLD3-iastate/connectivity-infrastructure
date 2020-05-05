@@ -41,8 +41,8 @@ data_work <- rbind(data_work, or_work)
 data_work <- data_work %>% select(-COUNTYFP, -COUNTYNS, -AFFGEOID, -LSAD, -NAME.x, -ALAND, -AWATER)
 data_work <- data_work %>% rename(name = NAME.y)
 
-data_work$internetTop <- factor(data_work$internetTop, levels = c(0, 1), labels = c("No", "Yes"))
-data_work$computerTop <- factor(data_work$computerTop, levels = c(0, 1), labels = c("No", "Yes"))
+data_work$nointernetTop <- factor(data_work$nointernetTop, levels = c(0, 1), labels = c("No", "Yes"))
+data_work$nocomputerTop <- factor(data_work$nocomputerTop, levels = c(0, 1), labels = c("No", "Yes"))
 data_work$occupTop <- factor(data_work$occupTop, levels = c(0, 1), labels = c("No", "Yes"))
 data_work$industrTop <- factor(data_work$industrTop, levels = c(0, 1), labels = c("No", "Yes"))
 
