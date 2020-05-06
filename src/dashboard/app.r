@@ -94,7 +94,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
 
 # Server
 
-server <- function(input, output, session) {
+server <- function(input, output) {
   
   # MAIN PLOTS
   output$mainplot <- renderLeaflet({
@@ -253,29 +253,60 @@ server <- function(input, output, session) {
   })
 
   # QUINTILE TABLES
-  
-  quintTopic <- reactive({ 
-    switch(input$whichtopic,
-                  "Remote education" = data_edu,
-                  "Remote work" = data_work,
-                  "Telehealth" = data_med)
-    })
-    
-  quintData <- reactive({
-    switch(input$whichstate,
-           "Iowa" = quintTopic[quintTopic$STATEFP == "19", ],
-           "Oregon" = quintTopic[quintTopic$STATEFP == "41", ],
-           "Virginia" = quintTopic[quintTopic$STATEFP == "51", ])
-  })
-  
   output$table_quint <- renderTable({
-      qnoint <- quantile(quintData$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-      qnocomp <- quantile(quintData$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-      qink12 <- quantile(quintData$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
+    
+    # Remote education
+    if (input$whichtopic == "Remote education") {
+      data <- data_edu
+      data <- switch(input$whichstate,
+                     "Iowa" = data[data$STATEFP == "19", ],
+                     "Oregon" = data[data$STATEFP == "41", ],
+                     "Virginia" = data[data$STATEFP == "51", ])
+      
+      qnoint <- quantile(data$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qnocomp <- quantile(data$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qink12 <- quantile(data$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
       
       quintcuts <- bind_rows(qnoint, qnocomp, qink12)
       quintcuts$id <- c("% children without internet access", "% population with no computer", "% population enrolled in K-12")
       quintcuts
+      
+      # Remote work
+    } else if (input$whichtopic == "Remote work") {
+      data <- data_work
+      data <- switch(input$whichstate,
+                     "Iowa" = data[data$STATEFP == "19", ],
+                     "Oregon" = data[data$STATEFP == "41", ],
+                     "Virginia" = data[data$STATEFP == "51", ])
+      
+      qnoint <- quantile(data$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qnocomp <- quantile(data$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qoccup <- quantile(data$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qind <- quantile(data$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      
+      quintcuts <- bind_rows(qnoint, qnocomp, qoccup, orqind)
+      quintcuts$id <- c("% households without broadband internet", "% population in labor force without a computer", "% population in non-remote labor force in non-remote-friendly occupations", "% population in non-remote labor force in non-remote-friendly industries")
+      quintcuts
+      
+      # Telehealth
+    } else if (input$whichtopic == "Telehealth") {
+      data <- data_med
+      data <- switch(input$whichstate,
+                     "Iowa" = data[data$STATEFP == "19", ],
+                     "Oregon" = data[data$STATEFP == "41", ],
+                     "Virginia" = data[data$STATEFP == "51", ])
+      
+      qnoint <- quantile(data$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qnocomp <- quantile(data$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qpoorment <- quantile(data$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qnumprov <- quantile(desc(data$dmenthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qunins <- quantile(data$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      
+      quintcuts <- bind_rows(orqnoint, orqnocomp, orqpoorment, orqnumprov, orqunins)
+      quintcuts$id <- c("% households without internet access", "% households without a computer", "Average number of poor mental health days", "Number of mental health providers per 100,000 population (reverse-coded)", "% population without health insurance")
+      quintcuts
+      
+    }
   })
 
 }
