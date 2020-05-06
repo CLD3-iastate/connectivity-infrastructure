@@ -358,3 +358,71 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git add --all
+gt ]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git commit -m "Added quintile tal[Kbles that don't sho wup[K[K[K[Kw up"
+gi[master 44ff413] Added quintile tables that don't show up
+ 3 files changed, 97 insertions(+), 21 deletions(-)
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git push origin master
+Username for 'https://github.com': tpristavec
+Password for 'https://tpristavec@github.com': 
+To https://github.com/uva-bi-sdad/gates.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/uva-bi-sdad/gates.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$f[Kgit oull [K[K[K[K[Kpull origin [K[K[K[K[K[K[K[K
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git pull origin master
+From https://github.com/uva-bi-sdad/gates
+ * branch            master     -> FETCH_HEAD
+hint: Waiting for your editor to close the file... error: unable to start editor 'vi'
+Not committing merge; use 'git commit' to complete the merge.
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$[Kbash-4.4$git s[Kcommit
+hint: Waiting for your editor to close the file... error: unable to start editor 'vi'
+Please supply the message using either -m or -F option.
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$-m "MERGIN[K[K[K[K[Kerging"
+bash: -m: command not found
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git commit 'm [K[K[K-m "Merging"
+[master 1f8a15a] Merging
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/B7142A94/console06/56167B9B[m
+	[31mmodified:   .Rproj.user/B7142A94/console06/INDEX001[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   .Rproj.user/B7142A94/console06/56167B9B[m
+	[31mmodified:   .Rproj.user/B7142A94/console06/INDEX001[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;/sfs/qumulo/qhome/tp2sk/Git/gatesbash-4.4$git [Kf[Kgi[K[K att [Kbash-4.4$git att [K[K[K[Kadd --all
