@@ -121,7 +121,7 @@ iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
 # Get cutoffs for table
 vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqink12 <- quantile(vadata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqink12 <- quantile(vadata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 vaquintcuts <- bind_rows(vaqnoint, vaqnocomp, vaqink12)
 vaquintcuts$id <- c("No internet", "No computer", "In K12")
@@ -129,7 +129,7 @@ vaquintcuts
 
 iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqink12 <- quantile(iadata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqink12 <- quantile(iadata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 iaquintcuts <- bind_rows(iaqnoint, iaqnocomp, iaqink12)
 iaquintcuts$id <- c("No internet", "No computer", "In K12")
@@ -137,7 +137,7 @@ iaquintcuts
 
 orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqink12 <- quantile(ordata$ink12Quint, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqink12 <- quantile(ordata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 orquintcuts <- bind_rows(orqnoint, orqnocomp, orqink12)
 orquintcuts$id <- c("No internet", "No computer", "In K12")

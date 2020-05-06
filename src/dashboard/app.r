@@ -73,7 +73,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 ),
                 
                 fluidRow(width = 12, 
-                         column(12, align = "left",
+                         column(5, align = "left",
+                                conditionalPanel("input.whichtopic == 'Remote education'",
+                                                 "Quintile Cut-offs",
+                                                 p(),
+                                                 tableOutput("output$table_quint")
+                                                 )
+                         ),
+                         column(7, align = "left",
                                 conditionalPanel("input.whichtopic == 'Remote education'",
                                                  tabsetPanel(
                                                    tabPanel("No internet", leafletOutput("output$subplot_noint")),
@@ -87,7 +94,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
 
 # Server
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   # MAIN PLOTS
   output$mainplot <- renderLeaflet({
@@ -112,7 +119,7 @@ server <- function(input, output) {
               "<strong>Placed in 4th or 5th quintile:</strong>",
               data$scoreTop, " times",
               "<br />",
-              "<strong>% households without internet access:</strong>",
+              "<strong>% children (age <18) without internet access:</strong>",
               round(data$nointernet, 2), "(quintile", data$nointernetQuint, ")",
               "<br />",
               "<strong>% households without a computer:</strong>",
@@ -162,7 +169,7 @@ server <- function(input, output) {
               "<strong>% households without internet access:</strong>",
               round(data$nointernet, 2), "(quintile", data$nointernetQuint, ")",
               "<br />",
-              "<strong>% households without a computer:</strong>",
+              "<strong>% population in labor force without a computer:</strong>",
               round(data$nocomputer, 2), "(quintile", data$nocomputerQuint, ")",
               "<br />",
               "<strong>% non-remote workers in non-remote friendly occupations:</strong>",
@@ -245,7 +252,31 @@ server <- function(input, output) {
   }
   })
 
-  # SUBPLOTS
+  # QUINTILE TABLES
+  
+  quintTopic <- reactive({ 
+    switch(input$whichtopic,
+                  "Remote education" = data_edu,
+                  "Remote work" = data_work,
+                  "Telehealth" = data_med)
+    })
+    
+  quintData <- reactive({
+    switch(input$whichstate,
+           "Iowa" = quintTopic[quintTopic$STATEFP == "19", ],
+           "Oregon" = quintTopic[quintTopic$STATEFP == "41", ],
+           "Virginia" = quintTopic[quintTopic$STATEFP == "51", ])
+  })
+  
+  output$table_quint <- renderTable({
+      qnoint <- quantile(quintData$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qnocomp <- quantile(quintData$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      qink12 <- quantile(quintData$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
+      
+      quintcuts <- bind_rows(qnoint, qnocomp, qink12)
+      quintcuts$id <- c("% children without internet access", "% population with no computer", "% population enrolled in K-12")
+      quintcuts
+  })
 
 }
 

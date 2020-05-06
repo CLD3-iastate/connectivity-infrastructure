@@ -152,7 +152,7 @@ iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
 vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqpoorment <- quantile(vadata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqnumprov <- quantile(desc(vadata$dmenthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqnumprov <- quantile(desc(vadata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
 vaqunins <- quantile(vadata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 vaquintcuts <- bind_rows(vaqnoint, vaqnocomp, vaqpoorment, vaqnumprov, vaqunins)
@@ -162,7 +162,7 @@ vaquintcuts
 iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqpoorment <- quantile(iadata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqnumprov <- quantile(desc(iadata$dmenthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqnumprov <- quantile(desc(iadata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
 iaqunins <- quantile(iadata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 iaquintcuts <- bind_rows(iaqnoint, iaqnocomp, iaqpoorment, iaqnumprov, iaqunins)
@@ -172,7 +172,7 @@ iaquintcuts
 orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqpoorment <- quantile(ordata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqnumprov <- quantile(desc(ordata$dmenthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqnumprov <- quantile(desc(ordata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
 orqunins <- quantile(ordata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
 
 orquintcuts <- bind_rows(orqnoint, orqnocomp, orqpoorment, orqnumprov, orqunins)
