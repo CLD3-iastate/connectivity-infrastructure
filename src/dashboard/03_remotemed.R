@@ -100,9 +100,9 @@ data <- data %>% transmute(
   AWATER = AWATER, 
   geometry = geometry,
   # households without internet (no internet / all)
-  nointernet = B28002_013E /B28002_001E,
+  nointernet = B28002_013E /B28002_001E * 100,
   # presence of computer (no computer / all)
-  nocomputer = B28003_006E / B28003_001E,
+  nocomputer = B28003_006E / B28003_001E * 100,
   # average number of poor mental health days
   avgnum_poormenth = avgnum_poormenth,
   # percent uninsured under age 65

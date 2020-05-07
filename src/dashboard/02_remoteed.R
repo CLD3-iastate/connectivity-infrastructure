@@ -86,11 +86,11 @@ data <- acsdata %>% transmute(
   AWATER = AWATER, 
   geometry = geometry,
   # households without internet (no internet / all)
-  nointernet = B28002_013E /B28002_001E,
+  nointernet = B28002_013E /B28002_001E * 100,
   # presence of computer by age (no computer / all <18)
-  nocomputer = B28005_007E / B28005_002E,
+  nocomputer = B28005_007E / B28005_002E * 100,
   # school enrolment (enroled in K12 / all)
-  ink12 = (B14001_005E + B14001_006E + B14001_007E) / B14001_001E
+  ink12 = (B14001_005E + B14001_006E + B14001_007E) / B14001_001E * 100
 )
 
 any(is.na(data))
