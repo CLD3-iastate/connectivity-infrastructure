@@ -62,8 +62,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(10, 
                                 p(),
                                 br(tags$b('This dashboard visualizes three measures of connectivity infrastructure as barriers to remote work, education, and mental health care.'), 
-                                   ('The dashboard displays county-level relative need and access, allowing extension professionals and policy-makers in Iowa, Oregon, and Virginia to 
-                                    make informed decisions about interventions and resource allocation.')),
+                                   ('It facilitates relative comparisons between counties, highlighting areas where workers may have difficulty working remotely, where youth would
+                                     face barriers to participating in online education, and where county residents may have high need but low access to telemental health services. 
+                                     The dashboard allows extension professionals and policy-makers in Iowa, Oregon, and Virginia to make informed decisions about interventions and resource allocation
+                                    based on conditions in their counties.')),
                                 p(),
                                 br('Using the map selector allows filtering by topic and state. Hovering over a county area on the resulting map displays information 
                                    about the calculated county relative vulnerability status, as well as relevant connectivity and need measures. Supplemental maps
@@ -179,7 +181,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                 h3(strong("Explore Ranking Indicators")),
                                 p(),
                                 p(strong("Click on the tabs to explore the individual indicators we used to 
-                                  construct our remote work relative vulnerability measure."), "Each tab displays a 
+                                  construct the selected relative vulnerability measure."), "Each tab displays a 
                                   box plot with descriptive statistics and a state map at county level for an individual indicator. 
                                   The selection of indicators will update depending on the topic selected."))
                 ),
@@ -189,8 +191,11 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                           tabsetPanel(
                                             tabPanel(title = "Households without broadband", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Households Without Broadband Internet")),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Broadband Internet")),
                                                      p(),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -201,14 +206,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_work"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household', target = "_blank")))
+                                                            leafletOutput("subplot_noint_work"))
                                             ),
                                             tabPanel(title = "Workers without computer", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Population in Labor Force Without a Computer")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28007&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28007, Labor force status by presence of a computer and types of internet subscription in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -219,14 +224,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_work"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28007&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28007, Labor force status by presence of a computer and types of internet subscription in household', target = "_blank")))
+                                                            leafletOutput("subplot_nocomp_work"))
                                             ),
                                             tabPanel(title = "Non-remote workers in remote unfriendly occupations", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Occupations")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Occupations")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B08124%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20OCCUPATION&hidePreview=true&tid=ACSDT5Y2018.B08124', 'Table B08124, Means of transportation to work by occupation.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -237,14 +242,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_occup"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=B08124%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20OCCUPATION&hidePreview=true&tid=ACSDT5Y2018.B08124', 'Table B08124, Means of transportation to work by occupation', target = "_blank")))
+                                                            leafletOutput("subplot_occup"))
                                             ),
                                             tabPanel(title = "Non-remote workers in remote unfriendly industries", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Industries")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Industries")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B08126%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20INDUSTRY&hidePreview=true&tid=ACSDT5Y2018.B08126&vintage=2018', 'Table B08126, Means of transportation to work by industry.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -255,9 +260,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_industr"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=B08126%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20INDUSTRY&hidePreview=true&tid=ACSDT5Y2018.B08126&vintage=2018', 'Table B08126, Means of transportation to work by industry', target = "_blank")))
+                                                            leafletOutput("subplot_industr"))
                                             )
                                             )
                                           )
@@ -268,8 +271,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                           tabsetPanel(
                                             tabPanel(title = "Households without internet", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Households Without Internet Access")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -280,14 +285,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_edu"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household', target = "_blank")))
+                                                            leafletOutput("subplot_noint_edu"))
                                             ),
                                             tabPanel(title = "Youth without computer", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Youth (Age <18) Without a Computer")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Youth (Age <18) Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28005&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28005, Age by presence of a computer and types of internet subscription in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -298,14 +303,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_edu"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28005&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28005, Age by presence of a computer and types of internet subscription in household', target = "_blank")))
+                                                            leafletOutput("subplot_nocomp_edu"))
                                             ),
                                             tabPanel(title = "Population in K-12", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Population Enrolled in K-12")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Population Enrolled in K-12")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B14001%3A%20SCHOOL%20ENROLLMENT%20BY%20LEVEL%20OF%20SCHOOL%20FOR%20THE%20POPULATION%203%20YEARS%20AND%20OVER&hidePreview=true&tid=ACSDT5Y2018.B14001&vintage=2018', 'Table B14001,	School enrollment by level of school for the population 3 years and over.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -316,9 +321,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_ink12"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=B14001%3A%20SCHOOL%20ENROLLMENT%20BY%20LEVEL%20OF%20SCHOOL%20FOR%20THE%20POPULATION%203%20YEARS%20AND%20OVER&hidePreview=true&tid=ACSDT5Y2018.B14001&vintage=2018', 'Table B14001,	School enrollment by level of school for the population 3 years and over', target = "_blank")))
+                                                            leafletOutput("subplot_ink12"))
                                             )
                                           )
                                  )
@@ -329,8 +332,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                           tabsetPanel(
                                             tabPanel(title = "Households without internet", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Households Without Internet Access")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -341,14 +346,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_med"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household', target = "_blank")))
+                                                            leafletOutput("subplot_noint_med"))
                                             ),
                                             tabPanel(title = "Households without computer", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Households Without a Computer")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28003&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28003, Presence of a computer and type of internet subscription in household.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -359,14 +364,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_med"),
-                                                            p(),
-                                                            tags$em('Data source: American Community Survey 2014/18 (5-year) estimates, ', a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28003&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28003, Presence of a computer and type of internet subscription in household', target = "_blank")))
+                                                            leafletOutput("subplot_nocomp_med"))
                                             ),
                                             tabPanel(title = "Population uninsured", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Percent Population Under Age 65 Without Health Insurance")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Percent Population Under Age 65 Without Health Insurance")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the Small Area Health Insurance Estimates 2017 via CountyHealthRankings,", 
+                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/uninsured', 'Percentage of population under age 65 without health insurance.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -377,14 +382,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_unins"),
-                                                            p(),
-                                                            tags$em('Data source: Small Area Health Insurance Estimates 2017 via CountyHealthRankings, ', a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/uninsured', 'Percentage of population under age 65 without health insurance', target = "_blank")))
+                                                            leafletOutput("subplot_unins"))
                                             ),
                                             tabPanel(title = "Poor mental health days", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Average Number of Poor Mental Health Days in Past Month")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Average Number of Poor Mental Health Days in Past Month")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the Behavioral Risk Factor Surveillance System 2017 via CountyHealthRankings,", 
+                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-outcomes/quality-of-life/poor-mental-health-days', 'Average number of mentally unhealthy days reported in past 30 days (age-adjusted).', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -395,14 +400,14 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_poorment"),
-                                                            p(),
-                                                            tags$em('Data source: Behavioral Risk Factor Surveillance System 2017 via CountyHealthRankings, ', a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-outcomes/quality-of-life/poor-mental-health-days', 'Average number of mentally unhealthy days reported in past 30 days (age-adjusted)', target = "_blank")))
+                                                            leafletOutput("subplot_poorment"))
                                             ),
                                             tabPanel(title = "Mental health providers", 
                                                      br(),
-                                                     p(strong("Indicator: County-Level Number of Mental Health Providers per 100,000 Population")),
-                                                     p(),
+                                                     h4(strong("Indicator: County-Level Number of Mental Health Providers per 100,000 Population")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the CMS National Provider Identification 2019 via CountyHealthRankings,", 
+                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/mental-health-providers', 'Number of mental health providers per 100,000 population.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -413,13 +418,27 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_healthprov"),
-                                                            p(),
-                                                            tags$em('Data source: CMS National Provider Identification 2019 via CountyHealthRankings, ', a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/mental-health-providers', 'Number of mental health providers per 100,000 population', target = "_blank")))
+                                                            leafletOutput("subplot_healthprov"))
                                             )
                                           )
                                  )
                 ), 
+                
+                fluidRow(style = "margin: 6px",
+                         width = 12,
+                         column(6, align = "left",
+                                tags$em("How to interpret this box plot."),
+                                p("The box plot visualizes data distribution for the selected indicator. The bottom and top horizontal lines extending from the box represent the smallest and largest non-outlier values on the selected indicator.
+                                  The bottom of the box represents the lower quartile; 25% of counties have indicator values below this threshold. Similarly, the top of the box represents the upper quartile, with 25% of counties having 
+                                  indicator values above this threshold. The body of the box represents the interquartile range, capturing indicator values for 50% of all counties. The horizontal line drawn through the box is the median 
+                                  -- the middle quartile or the midpoint value in the distribution. Half of all counties have indicator values below this threshold, and half have indicator values above the threshold.
+                                  Dots represent outlier values. Hover over the boxplot to view exact summary values.")),
+                         column(6, align = "left",
+                                tags$em("How to interpret this map."),
+                                p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have a higher value on the selected indicator. Conversely, counties with lighter colors have lower
+                                  values on the selected indicator. To facilitate comparisons, map colors represent grouped values. To view the exact indicator value for a particular county, hover over the county on the map. The information
+                                  box will display the county name, exact indicator value, and its corresponding quintile."))
+                         ),
                 
                 hr(),
                 
@@ -474,7 +493,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nocomputer, 
               type = "box",
               name = "Percent population in labor force without a computer") %>% 
-        layout(title = "County Boxplot: Percent Population in Labor Force Without a Computer",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -494,7 +513,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nointernet, 
               type = "box",
               name = "Percent households without broadband internet") %>% 
-        layout(title = "County Boxplot: Percent Households Without Broadband Internet",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -514,7 +533,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$occup, 
               type = "box",
               name = "Percent non-remote workers in non-remote friendly occupations") %>% 
-        layout(title = "County Boxplot: Percent Non-Remote Workers in Non-Remote Friendly Occupations",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -534,7 +553,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$industr, 
               type = "box",
               name = "Percent non-remote workers in non-remote friendly industries") %>% 
-        layout(title = "County Boxplot: Percent Non-Remote Workers in Non-Remote Friendly Industries",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -554,7 +573,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nointernet, 
               type = "box",
               name = "Percent households without internet access") %>% 
-        layout(title = "County Boxplot: Percent Households Without Internet Access",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -574,7 +593,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nocomputer, 
               type = "box",
               name = "Percent households without a computer") %>% 
-        layout(title = "County Boxplot: Percent Households Without a Computer",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -594,7 +613,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$pct_unins, 
               type = "box",
               name = "Percent population under age 65 without health insurance") %>% 
-        layout(title = "County Boxplot: Percent Population Under Age 65 Without Health Insurance",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -614,7 +633,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$avgnum_poormenth, 
               type = "box",
               name = "Average number of poor mental health days in past month") %>% 
-        layout(title = "County Boxplot: Average Number of Poor Mental Health Days in Past Month",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -634,7 +653,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$menthprov_per100k, 
               type = "box",
               name = "Number of mental health providers per 100,000 population") %>% 
-        layout(title = "County Boxplot: Number of Mental Health Providers per 100,000 Population",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -654,7 +673,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nointernet, 
               type = "box",
               name = "Percent households without internet access") %>% 
-        layout(title = "County Boxplot: Percent Households Without Internet Access",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -674,7 +693,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$nocomputer, 
               type = "box",
               name = "Percent youth (age <18) without a computer") %>% 
-        layout(title = "County Boxplot: Percent Youth (Age <18) without a Computer",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
@@ -694,7 +713,7 @@ server <- function(input, output) {
       plot_ly(y = ~data$ink12, 
               type = "box",
               name = "Percent population enrolled in K-12") %>% 
-        layout(title = "County Boxplot: Percent Population Enrolled in K-12",
+        layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
