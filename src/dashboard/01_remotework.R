@@ -169,21 +169,21 @@ data <- acsdata %>% transmute(
   AWATER = AWATER, 
   geometry = geometry,
   # internet access (only dial up/only cellular/only satellite/none : total)
-  nointernet = (B28002_003E + B28002_006E + B28002_010E + B28002_013E) / B28002_001E,
+  nointernet = (B28002_003E + B28002_006E + B28002_010E + B28002_013E) / B28002_001E * 100,
   # presence of computer for those in labor force (no computer employed + no computer unemployed : total in labor force)
-  nocomputer = (B28007_008E + B28007_014E) / B28007_002E,
+  nocomputer = (B28007_008E + B28007_014E) / B28007_002E * 100,
   # occupations (not-wfh-friendly occupations / total occupations that don't already WFH)
   occup = (B08124_010E + B08124_012E + B08124_013E + B08124_014E + B08124_017E +
              B08124_019E + B08124_020E + B08124_021E + B08124_024E + B08124_026E +
              B08124_027E + B08124_028E + B08124_031E + B08124_033E + B08124_034E +
-             B08124_035E + B08124_038E + B08124_040E + B08124_041E + B08124_042E) / (B08124_001E - B08124_043E),
+             B08124_035E + B08124_038E + B08124_040E + B08124_041E + B08124_042E) / (B08124_001E - B08124_043E) * 100,
   # industries (not-wfh-friendly industries / total in industries that don't already WFH)
   industr = (B08126_018E + B08126_019E + B08126_020E + B08126_021E + B08126_022E + B08126_029E +
                B08126_030E + B08126_033E + B08126_034E + B08126_035E + B08126_036E + B08126_037E +
                B08126_044E + B08126_045E + B08126_048E + B08126_049E + B08126_050E + B08126_051E +
                B08126_052E + B08126_059E + B08126_060E + B08126_063E + B08126_064E + B08126_065E +
                B08126_066E + B08126_067E + B08126_074E + B08126_075E + B08126_078E + B08126_079E +
-               B08126_080E + B08126_081E + B08126_082E + B08126_089E + B08126_090E) / (B08126_001E - B08126_091E)
+               B08126_080E + B08126_081E + B08126_082E + B08126_089E + B08126_090E) / (B08126_001E - B08126_091E) * 100
 )
 
 any(is.na(data))
@@ -199,44 +199,44 @@ ordata <- data %>% filter(STATEFP == 41)
 #
 
 # Find quintiles:
-vadata <- vadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            occupQuint = ntile(occup, 5),
-                            industrQuint = ntile(industr, 5))
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)   
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$occupQuint <- cut(vadata$occup, quantile(vadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$industrQuint <- cut(vadata$industr, quantile(vadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
-ordata <- ordata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            occupQuint = ntile(occup, 5),
-                            industrQuint = ntile(industr, 5))
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$occupQuint <- cut(ordata$occup, quantile(ordata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$industrQuint <- cut(ordata$industr, quantile(ordata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
-iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            occupQuint = ntile(occup, 5),
-                            industrQuint = ntile(industr, 5))
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$occupQuint <- cut(iadata$occup, quantile(iadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$industrQuint <- cut(iadata$industr, quantile(iadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
 # Get cutoffs for table
-vaqint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqcomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqoccup <- quantile(vadata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqind <- quantile(vadata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqcomp <- quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqoccup <- quantile(vadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqind <- quantile(vadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 vaquintcuts <- bind_rows(vaqint, vaqcomp, vaqoccup, vaqind)
 vaquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")
 vaquintcuts
 
-iaqint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqcomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqoccup <- quantile(iadata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqind <- quantile(iadata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqint <- quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqcomp <- quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqoccup <- quantile(iadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqind <- quantile(iadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 iaquintcuts <- bind_rows(iaqint, iaqcomp, iaqoccup, iaqind)
 iaquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")
 iaquintcuts
 
-orqint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqcomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqoccup <- quantile(ordata$occup, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqind <- quantile(ordata$industr, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqint <- quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqcomp <- quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqoccup <- quantile(ordata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqind <- quantile(ordata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 orquintcuts <- bind_rows(orqint, orqcomp, orqoccup, orqind)
 orquintcuts$id <- c("Internet", "Computer", "Occupation", "Industry")

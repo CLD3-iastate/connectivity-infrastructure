@@ -31,13 +31,26 @@ census_api_key("548d39e0315b591a0e9f5a8d9d6c1f22ea8fafe0") # Teja's key
 # B28003_001
 # B28003_006
 
+# c)
+# B27020 HEALTH INSURANCE COVERAGE STATUS AND TYPE BY CITIZENSHIP STATUS , Civilian noninstitutionalized population
+# no insurance, _001 (total), _006, _012, _017 (no coverage by citizenship status)
+
+# B27020_001
+# B27020_006
+# B27020_012
+# B27020_017
 
 # Select variables
 vars <- c(
   # presence and types of internet
   "B28002_001", "B28002_013",
   # presence of computer 
-  "B28003_001", "B28003_006"
+  "B28003_001", "B28003_006",
+  # no insurance
+  "B27020_001",
+  "B27020_006",
+  "B27020_012",
+  "B27020_017"
 )                 
 
 
@@ -73,6 +86,9 @@ chrdata <- read.csv("./rivanna_data/working/countyhealthrankings/mentalhealth.cs
 # pct_unins = percent uninsured, 2017, Small Area Health Insurance Estimates (https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/uninsured)
 # menthprov_per100k = number of mental health providers per 100,000 population, 2019, CMS National Provider Identification (https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/mental-health-providers)
 
+# Discard uninsured, use ACS
+chrdata$pct_unins <- NULL
+
 
 #
 # Join --------------------------------------------------------------------------------------
@@ -100,13 +116,13 @@ data <- data %>% transmute(
   AWATER = AWATER, 
   geometry = geometry,
   # households without internet (no internet / all)
-  nointernet = B28002_013E /B28002_001E,
+  nointernet = B28002_013E /B28002_001E * 100,
   # presence of computer (no computer / all)
-  nocomputer = B28003_006E / B28003_001E,
+  nocomputer = B28003_006E / B28003_001E * 100,
+  # percent uninsured
+  pct_unins = (B27020_006E + B27020_012E + B27020_017E) / B27020_001E * 100,
   # average number of poor mental health days
   avgnum_poormenth = avgnum_poormenth,
-  # percent uninsured under age 65
-  pct_unins = pct_unins,
   # mental health providers per 100k population
   menthprov_per100k = menthprov_per100k
 )
@@ -129,51 +145,50 @@ miss_var_summary(iadata) # 9
 #
 
 # Find quintiles (note: providers per 100k will have to be reverse-coded)
-# This handles NAs. Quintile value ends up being NA.
-vadata <- vadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            menthdaysQuint = ntile(avgnum_poormenth, 5),
-                            menthprovQuint = ntile(desc(menthprov_per100k), 5),
-                            uninsQuint = ntile(pct_unins, 5))
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$menthdaysQuint <- cut(vadata$avgnum_poormenth, quantile(vadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$uninsQuint <- cut(vadata$pct_unins, quantile(vadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$menthprovQuint <- cut(vadata$menthprov_per100k, abs(quantile(desc(vadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
 
-ordata <- ordata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            menthdaysQuint = ntile(avgnum_poormenth, 5),
-                            menthprovQuint = ntile(desc(menthprov_per100k), 5),
-                            uninsQuint = ntile(pct_unins, 5))
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$menthdaysQuint <- cut(ordata$avgnum_poormenth, quantile(ordata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$uninsQuint <- cut(ordata$pct_unins, quantile(ordata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$menthprovQuint <- cut(ordata$menthprov_per100k, abs(quantile(desc(ordata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
 
-iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            menthdaysQuint = ntile(avgnum_poormenth, 5),
-                            menthprovQuint = ntile(desc(menthprov_per100k), 5),
-                            uninsQuint = ntile(pct_unins, 5))
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$menthdaysQuint <- cut(iadata$avgnum_poormenth, quantile(iadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$uninsQuint <- cut(iadata$pct_unins, quantile(iadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$menthprovQuint <- cut(iadata$menthprov_per100k, abs(quantile(desc(iadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
 
 # Get cutoffs for table
-vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqpoorment <- quantile(vadata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqnumprov <- quantile(desc(vadata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqunins <- quantile(vadata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqpoorment <- quantile(vadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqnumprov <- quantile(desc(vadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqunins <- quantile(vadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 vaquintcuts <- bind_rows(vaqnoint, vaqnocomp, vaqpoorment, vaqnumprov, vaqunins)
 vaquintcuts$id <- c("No internet", "No computer", "Num poor mental health", "Num mental health prov", "Pct uninsured")
 vaquintcuts
 
-iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqpoorment <- quantile(iadata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqnumprov <- quantile(desc(iadata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqunins <- quantile(iadata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqpoorment <- quantile(iadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqnumprov <- quantile(desc(iadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqunins <- quantile(iadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 iaquintcuts <- bind_rows(iaqnoint, iaqnocomp, iaqpoorment, iaqnumprov, iaqunins)
 iaquintcuts$id <- c("No internet", "No computer", "Num poor mental health", "Num mental health prov", "Pct uninsured")
 iaquintcuts
 
-orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqpoorment <- quantile(ordata$avgnum_poormenth, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqnumprov <- quantile(desc(ordata$menthprov_per100k), prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqunins <- quantile(ordata$pct_unins, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqpoorment <- quantile(ordata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqnumprov <- quantile(desc(ordata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqunins <- quantile(ordata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 orquintcuts <- bind_rows(orqnoint, orqnocomp, orqpoorment, orqnumprov, orqunins)
 orquintcuts$id <- c("No internet", "No computer", "Num poor mental health", "Num mental health prov", "Pct uninsured")
