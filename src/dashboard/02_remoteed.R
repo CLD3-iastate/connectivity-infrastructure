@@ -106,38 +106,38 @@ ordata <- data %>% filter(STATEFP == 41)
 #
 
 # Find quintiles:
-vadata <- vadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            ink12Quint = ntile(ink12, 5))
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$ink12Quint <- cut(vadata$ink12, quantile(vadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
-ordata <- ordata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            ink12Quint = ntile(ink12, 5))
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$ink12Quint <- cut(ordata$ink12, quantile(ordata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
-iadata <- iadata %>% mutate(nointernetQuint = ntile(nointernet, 5),
-                            nocomputerQuint = ntile(nocomputer, 5),
-                            ink12Quint = ntile(ink12, 5))
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$ink12Quint <- cut(iadata$ink12, quantile(iadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
 
 # Get cutoffs for table
-vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-vaqink12 <- quantile(vadata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
+vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqnocomp <- quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+vaqink12 <- quantile(vadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 vaquintcuts <- bind_rows(vaqnoint, vaqnocomp, vaqink12)
 vaquintcuts$id <- c("No internet", "No computer", "In K12")
 vaquintcuts
 
-iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-iaqink12 <- quantile(iadata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
+iaqnoint <- quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqnocomp <- quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+iaqink12 <- quantile(iadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 iaquintcuts <- bind_rows(iaqnoint, iaqnocomp, iaqink12)
 iaquintcuts$id <- c("No internet", "No computer", "In K12")
 iaquintcuts
 
-orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, 0.2), na.rm = TRUE)
-orqink12 <- quantile(ordata$ink12, prob = seq(0, 1, 0.2), na.rm = TRUE)
+orqnoint <- quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqnocomp <- quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE)
+orqink12 <- quantile(ordata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE)
 
 orquintcuts <- bind_rows(orqnoint, orqnocomp, orqink12)
 orquintcuts$id <- c("No internet", "No computer", "In K12")

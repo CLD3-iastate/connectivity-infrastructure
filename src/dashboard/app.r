@@ -37,13 +37,15 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 tags$head(tags$style(HTML(" .sidebar { font-size: 40%; } "))
                 ),
                 
-                headerPanel(img(src = "logo.png", class = "topimage", width = "25%", style = "display: block; margin-left: auto; margin-right: auto;")
+                fluidRow(width = 12,
+                         align = "center",
+                         img(src = "logo.png", class = "topimage", width = "25%", style = "display: block; margin-left: auto; margin-right: auto;")
                 ),
                 
-                hr(),
-                
                 fluidRow(width = 12, 
-                         column(12, align = "center", h2(strong("Connectivity Infrastructure as Barrier to Remote Work, Education, and Mental Health Care: County Explorer")))
+                         column(1),
+                         column(10, align = "center", h2(strong("Connectivity Infrastructure as Barrier to Remote Work, Education, and Mental Health Care: County Explorer"))),
+                         column(1)
                 ),
                 
                 hr(),
@@ -62,7 +64,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(10, 
                                 p(),
                                 br(tags$b('This dashboard visualizes three measures of connectivity infrastructure as barriers to remote work, education, and mental health care.'), 
-                                   ('It facilitates relative comparisons between counties, highlighting areas where workers may have difficulty working remotely, where youth would
+                                   ('It facilitates relative comparisons between counties within states, highlighting areas where workers may have difficulty working remotely, where youth would
                                      face barriers to participating in online education, and where county residents may have high need but low access to telemental health services. 
                                      The dashboard allows extension professionals and policy-makers in Iowa, Oregon, and Virginia to make informed decisions about interventions and resource allocation
                                     based on conditions in their counties.')),
@@ -78,65 +80,87 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 hr(),
                 
                 fluidRow(width = 12, style = "margin: 20px",
-                         h2('Measures and Data Sources')
+                         h2('Measures and Data Sources'),
+                         tabsetPanel(
+                           tabPanel(title = "Remote Work Vulnerability", 
+                                    wellPanel(strong('Remote Work Vulnerability'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The remote work relative vulnerability measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
+                                              ('It conceptualizes four telecommunication infrastructure and employment characteristics as potential barriers, providing
+                                              a relative ranking of county telework preparedness.'),
+                                              p(),
+                                              em('How We Measure Remote Work Vulnerability.'),
+                                              br('We calculate remote work relative vulnerability using information on percent:'),
+                                              tags$li('Households with no broadband internet subscription.'),
+                                              tags$li('Persons in labor force with no computer available.'),
+                                              tags$li('Persons who are not currently working remotely and are employed in telework unfriendly occupations
+                                                     (service, natural, construction, maintenance, production, transportation, material moving, and military specific occupations).'),
+                                              tags$li('Persons who are not currently working remotely and are employed in telework unfriendly industries 
+                                                (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'),
+                                              br('We compute quintile cut-offs for each indicator. We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('Very high: all 4 indicators.'),
+                                              tags$li('High: 3 indicators.'),
+                                              tags$li('Medium: 2 indicators.'), 
+                                              tags$li('Low: 1 indicator.'),
+                                              tags$li('None: 0 indicators.'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
+                                    )),
+                           tabPanel(title = "Remote Education Vulnerability", 
+                                    wellPanel(strong('Remote Education Vulnerability'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The remote education relative vulnerability measure highlights counties where K-12 students may have difficulty participating in online education.'), 
+                                              ('It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'),
+                                              p(),
+                                              em('How We Measure Remote Education Vulnerability.'),
+                                              br('We calculate remote education relative vulnerability using information on percent:'),
+                                              tags$li('Households with no internet access subscription.'),
+                                              tags$li('Population under age 18 without a computer.'),
+                                              tags$li('Population enrolled in K-12.'),
+                                              br('We compute quintile cut-offs for each indicator.
+                                                We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('High: all 3 indicators.'),
+                                              tags$li('Medium: 2 indicators.'),
+                                              tags$li('Low: 1 indicator.'),
+                                              tags$li('None: 0 indicators.'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
+                                    )),
+                           tabPanel(title = "Telemental Health Vulnerability", 
+                                    wellPanel(strong('Telemental Health Vulnerability'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The telemental health relative vulnerability measure highlights counties where high need for mental health services is coupled with
+                                                  barriers to access.'), ('It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
+                                                                          in providing a relative ranking of county K-12 telemental health vulnerability.'),
+                                              p(),
+                                              em('How We Measure Telemental Health Vulnerability.'),
+                                              br('We calculate telemental health relative vulnerability using information on:'),
+                                              tags$li('Percent households without internet access.'),
+                                              tags$li('Percent households with no computer.'),
+                                              tags$li('Average number of poor mental health days in past month.'),
+                                              tags$li('Number of mental health providers per 100,000 population (reverse-coded).'),
+                                              tags$li('Percent population under age 65 without health insurance.'),
+                                              br('We compute quintile cut-offs for each indicator.
+                                                We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('Very high: all 5 indicators'),
+                                              tags$li('High: 4 indicators.'),
+                                              tags$li('Medium: 3 indicators.'),
+                                              tags$li('Low: 2 indicators.'),
+                                              tags$li('Very low: 1 indicator.'),
+                                              tags$li('None: 0 indicators.'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates and",
+                                                a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources', 'County Health Rankings', target = "_blank"), "2019.")
+                                    ))
+                         )
                 ),
                 
-                fluidRow(style = "margin: 6px",
-                         column(4, wellPanel(strong('Remote Work Vulnerability'), 
-                                             p(),
-                                             em('Description.'),
-                                             br(), tags$b('The remote work relative vulnerability measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
-                                             ('It conceptualizes four telecommunication infastructure and employment characteristics as potential barriers, providing
-                                              a relative ranking of county telework preparedness.'),
-                                             p(),
-                                             em('How We Measure Remote Work Vulnerability.'),
-                                             br('We calculate remote work relative vulnerability using information on percent households with no broadband internet subscription,
-                                                percent persons in labor force with no computer available, percent persons who are not currently working remotely and are employed in telework unfriendly occupations,
-                                                and percent persons who are not currently working remotely and are employed in telework unfriendly industries. We compute quintile cut-offs for each indicator.
-                                                Counties are considered very high vulnerability if they placed in 4th or 5th quintile on all 4 indicators considered, high if on 3 indicators, medium if on 2, 
-                                                low if on 1, and no vulnerability if they did not place in the 4th or 5th quintile on any indicators.'),
-                                             p(),
-                                             em('Data source.'),
-                                             p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
-                                             )),
-                         
-                         column(4, wellPanel(strong('Remote Education Vulnerability'),
-                                             p(),
-                                             em('Description.'),
-                                             br(), tags$b('The remote education relative vulnerability measure highlights counties where K-12 students may have difficulty participating in online education.'), 
-                                             ('It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'),
-                                             p(),
-                                             em('How We Measure Remote Education Vulnerability.'),
-                                             br('We calculate remote education relative vulnerability using information on percent households with no internet access subscription,
-                                                percent population under age 18 without a computer, and percent population enrolled in K-12. We compute quintile cut-offs for each indicator.
-                                                Counties are considered high vulnerability if they placed in 4th or 5th quintile on all 3 indicators
-                                                considered, medium if on 2 indicators, low if on 1, and no vulnerability if they did not
-                                                place in the 4th or 5th quintile on any indicators.'),
-                                             p(),
-                                             em('Data source.'),
-                                             p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
-                                             )),
-                         
-                         column(4, wellPanel(strong('Telemental Health Vulnerability'),
-                                             p(),
-                                             em('Description.'),
-                                             br(), tags$b('The telemental health relative vulnerability measure highlights counties where high need for mental health services is coupled with
-                                                          barriers to access.'), ('It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
-                                                                                  in providing a relative ranking of county K-12 telemental health vulnerability.'),
-                                             p(),
-                                             em('How We Measure Telemental Health Vulnerability.'),
-                                             br('We calculate telemental health relative vulnerability using information on percent households without internet access, 
-                                                percent households with no computer, average number of poor mental health days in past month, number of mental health providers per 100,000
-                                                population (reverse-coded), and percent population under age 65 without health insurance. We compute quintile cut-offs for each indicator.
-                                                Counties are considered very high vulnerability if they placed in 4th or 5th quintile on all 5 indicators
-                                                considered, high if on 4 indicators, medium if on 3, very low if on 2, low if on 1, and no vulnerability
-                                                if they did not place in the 4th or 5th quintile on any indicators.'),
-                                             p(),
-                                             em('Data source.'),
-                                             p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates and",
-                                               a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources', 'County Health Rankings', target = "_blank"), "2019.")
-                                             ))
-                         ),
                 hr(),
                 
                 fluidRow(style = "margin: 6px",
@@ -164,7 +188,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                   The selected map will display on the right, and individual indicators associated
                                   with the selected topic will be come available for further exploration below."),
                                 p(),
-                                p("Please be patient as the map loads.")
+                                p("The map may take a moment to load.")
                                 ),
                          column(width = 9, 
                                 h4(strong("County Map"), align = "left"),
@@ -368,10 +392,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                             ),
                                             tabPanel(title = "Population uninsured", 
                                                      br(),
-                                                     h4(strong("Indicator: County-Level Percent Population Under Age 65 Without Health Insurance")),
+                                                     h4(strong("Indicator: County-Level Percent Population Without Health Insurance")),
                                                      p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                       Data come from the Small Area Health Insurance Estimates 2017 via CountyHealthRankings,", 
-                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/uninsured', 'Percentage of population under age 65 without health insurance.', target = "_blank")),
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=coverage&tid=ACSDT5Y2018.B27020&d=ACS%205-Year%20Estimates%20Detailed%20Tables&vintage=2018', 'Table B27020, Health insurance coverage status and type by citizenship status.', target = "_blank")),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Box Plot"),
@@ -491,13 +515,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nocomputer, 
+              x = "Percent population in labor force without a computer",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent population in labor force without a computer") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -511,13 +539,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nointernet, 
+              x = "Percent households without broadband internet",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent households without broadband internet") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -531,13 +563,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$occup, 
+              x = "Percent non-remote workers in non-remote friendly occupations",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent non-remote workers in non-remote friendly occupations") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -551,13 +587,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$industr, 
+              x = "Percent non-remote workers in non-remote friendly industries",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent non-remote workers in non-remote friendly industries") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -571,13 +611,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nointernet, 
+              x = "Percent households without internet access",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent households without internet access") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -591,13 +635,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nocomputer, 
+              x = "Percent households without a computer",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent households without a computer") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -611,13 +659,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$pct_unins, 
+              x = "Percent population without health insurance",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent population under age 65 without health insurance") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -631,13 +683,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$avgnum_poormenth, 
+              x = "Average number of poor mental health days in past month",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Average number of poor mental health days in past month") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -651,13 +707,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$menthprov_per100k, 
+              x = "Number of mental health providers per 100,000 population",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Number of mental health providers per 100,000 population") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -671,13 +731,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nointernet, 
+              x = "Percent households without internet access",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent households without internet access") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -691,13 +755,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$nocomputer, 
+              x = "Percent youth (age <18) without a computer",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent youth (age <18) without a computer") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -711,13 +779,17 @@ server <- function(input, output) {
                      "Virginia" = data[data$STATEFP == "51", ])
       
       plot_ly(y = ~data$ink12, 
+              x = "Percent population enrolled in K-12",
+              showlegend = FALSE,
+              hoverinfo = "y",
               type = "box",
-              name = "Percent population enrolled in K-12") %>% 
+              name = "") %>% 
         layout(title = "",
                xaxis = list(title = "",
                             zeroline = FALSE),
                yaxis = list(title = "Percent",
-                            zeroline = FALSE))
+                            zeroline = FALSE,
+                            hoverformat = ".2f"))
     }
   })
   
@@ -774,7 +846,8 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1)
+                  title = "Relative Vulnerability", opacity = 1,
+                  na.label = "Not Available")
       
       # Main plot: remote work
     } else if (input$whichtopic == "Remote work") {
@@ -826,7 +899,8 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1)
+                  title = "Relative Vulnerability", opacity = 1,
+                  na.label = "Not Available")
       
       # Main plot: telehealth
     } else if (input$whichtopic == "Telemental health") {
@@ -881,7 +955,8 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1)
+                  title = "Relative Vulnerability", opacity = 1,
+                  na.label = "Not Available")
     }
   })
   
@@ -969,7 +1044,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nointernet, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nointernet, n = 5)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1000,7 +1075,12 @@ server <- function(input, output) {
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nointernet,
                   title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0(formatC(cuts[-n]), " - ", formatC(cuts[-1]))
+                  })
     }
   })
   
@@ -1424,7 +1504,7 @@ server <- function(input, output) {
         paste("<strong>County: </strong>",
               data$name,
               "<br />",
-              "<strong>% Population under age 65 without health insurance:</strong>",
+              "<strong>% Population without health insurance:</strong>",
               data$pct_unins, "(quintile", data$uninsQuint, ")",
               "<br />",
               "<strong>Quintile:</strong>",
