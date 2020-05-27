@@ -1592,7 +1592,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorQuantile("Blues", domain = desc(data$menthprov_per100k), probs = seq(0, 1, length = 6), right = TRUE)
+      pal <- colorQuantile("Blues", domain = data$menthprov_per100k, probs = seq(0, 1, length = 6), right = TRUE, reverse = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1608,7 +1608,7 @@ server <- function(input, output) {
       
       leaflet(data) %>%
         addTiles() %>%
-        addPolygons(fillColor = ~pal(desc(data$menthprov_per100k)), 
+        addPolygons(fillColor = ~pal(data$menthprov_per100k), 
                     fillOpacity = 0.8,
                     stroke = TRUE,
                     weight = 0.9,
@@ -1621,7 +1621,7 @@ server <- function(input, output) {
                                                   "border-color" = "rgba(0,0,0,0.5)",
                                                   direction = "auto"
                                                 ))) %>%
-        addLegend("bottomleft", pal = pal, values = ~desc(data$menthprov_per100k),
+        addLegend("bottomleft", pal = pal, values = ~data$menthprov_per100k,
                   title = "Number<br>(Quintile Group)", opacity = 1,
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
