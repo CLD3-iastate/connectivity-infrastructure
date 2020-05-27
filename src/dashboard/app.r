@@ -460,7 +460,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(6, align = "left",
                                 tags$em("How to interpret this map."),
                                 p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have a higher value on the selected indicator. Conversely, counties with lighter colors have lower
-                                  values on the selected indicator. To facilitate comparisons, map colors represent grouped values. To view the exact indicator value for a particular county, hover over the county on the map. The information
+                                  values on the selected indicator. To facilitate comparisons and display quintile cut-off points, map colors represent quintile-grouped values. To view the exact indicator value for a particular county, hover over the county on the map. The information
                                   box will display the county name, exact indicator value, and its corresponding quintile."))
                          ),
                 
@@ -1044,7 +1044,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorQuantile("Blues", domain = data$nointernet, n = 5)
+      pal <- colorQuantile("Blues", domain = data$nointernet, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1074,12 +1074,12 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nointernet,
-                  title = "Percent", opacity = 1,
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
                     p = paste0(round(p * 100), '%')
-                    cuts = paste0(formatC(cuts[-n]), " - ", formatC(cuts[-1]))
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
                   })
     }
   })
@@ -1093,7 +1093,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nointernet, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nointernet, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1123,8 +1123,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nointernet,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1137,7 +1142,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nointernet, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nointernet, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1167,8 +1172,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nointernet,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1186,7 +1196,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nocomputer, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nocomputer, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1216,8 +1226,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nocomputer,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1230,7 +1245,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nocomputer, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nocomputer, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1260,8 +1275,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nocomputer,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1274,7 +1294,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$nocomputer, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$nocomputer, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1304,8 +1324,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$nocomputer,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1322,7 +1347,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$ink12, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$ink12, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1352,8 +1377,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$ink12,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1366,7 +1396,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$occup, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$occup, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1396,8 +1426,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$occup,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1410,7 +1445,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$industr, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$industr, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1440,8 +1475,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$industr,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1454,7 +1494,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$avgnum_poormenth, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$avgnum_poormenth, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1484,8 +1524,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$avgnum_poormenth,
-                  title = "Number", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Number<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1498,7 +1543,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$pct_unins, bins = 5)
+      pal <- colorQuantile("Blues", domain = data$pct_unins, probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1528,8 +1573,13 @@ server <- function(input, output) {
                                                   direction = "auto"
                                                 ))) %>%
         addLegend("bottomleft", pal = pal, values = ~data$pct_unins,
-                  title = "Percent", opacity = 1,
-                  na.label = "Not Available")
+                  title = "Percent<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   
@@ -1542,7 +1592,7 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorBin("Blues", domain = data$menthprov_per100k, bins = 5)
+      pal <- colorQuantile("Blues", domain = desc(data$menthprov_per100k), probs = seq(0, 1, length = 6), right = TRUE)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
@@ -1558,7 +1608,7 @@ server <- function(input, output) {
       
       leaflet(data) %>%
         addTiles() %>%
-        addPolygons(fillColor = ~pal(data$menthprov_per100k), 
+        addPolygons(fillColor = ~pal(desc(data$menthprov_per100k)), 
                     fillOpacity = 0.8,
                     stroke = TRUE,
                     weight = 0.9,
@@ -1571,9 +1621,14 @@ server <- function(input, output) {
                                                   "border-color" = "rgba(0,0,0,0.5)",
                                                   direction = "auto"
                                                 ))) %>%
-        addLegend("bottomleft", pal = pal, values = ~data$menthprov_per100k,
-                  title = "Number", opacity = 1,
-                  na.label = "Not Available")
+        addLegend("bottomleft", pal = pal, values = ~desc(data$menthprov_per100k),
+                  title = "Number<br>(Quintile Group)", opacity = 1,
+                  na.label = "Not Available",
+                  labFormat = function(type, cuts, p) {
+                    n = length(cuts)
+                    p = paste0(round(p * 100), '%')
+                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                  })
     }
   })
   

@@ -145,23 +145,41 @@ miss_var_summary(iadata) # 9
 #
 
 # Find quintiles (note: providers per 100k will have to be reverse-coded)
-vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$menthdaysQuint <- cut(vadata$avgnum_poormenth, quantile(vadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$uninsQuint <- cut(vadata$pct_unins, quantile(vadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$menthprovQuint <- cut(vadata$menthprov_per100k, abs(quantile(desc(vadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$menthdaysQuint <- cut(vadata$avgnum_poormenth, quantile(vadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$uninsQuint <- cut(vadata$pct_unins, quantile(vadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$menthprovQuint <- cut(vadata$menthprov_per100k, quantile(vadata$menthprov_per100k, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$menthprovQuint <- case_when(vadata$menthprovQuint == 5 ~ 1,
+                                   vadata$menthprovQuint == 4 ~ 2,
+                                   vadata$menthprovQuint == 3 ~ 3,
+                                   vadata$menthprovQuint == 2 ~ 4,
+                                   vadata$menthprovQuint == 1 ~ 5,
+                                   is.na(vadata$menthprovQuint) ~ NA_real_)
 
-ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$menthdaysQuint <- cut(ordata$avgnum_poormenth, quantile(ordata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$uninsQuint <- cut(ordata$pct_unins, quantile(ordata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$menthprovQuint <- cut(ordata$menthprov_per100k, abs(quantile(desc(ordata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$menthdaysQuint <- cut(ordata$avgnum_poormenth, quantile(ordata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$uninsQuint <- cut(ordata$pct_unins, quantile(ordata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$menthprovQuint <- cut(ordata$menthprov_per100k, quantile(ordata$menthprov_per100k, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$menthprovQuint <- case_when(ordata$menthprovQuint == 5 ~ 1,
+                                   ordata$menthprovQuint == 4 ~ 2,
+                                   ordata$menthprovQuint == 3 ~ 3,
+                                   ordata$menthprovQuint == 2 ~ 4,
+                                   ordata$menthprovQuint == 1 ~ 5,
+                                   is.na(ordata$menthprovQuint) ~ NA_real_)
 
-iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$menthdaysQuint <- cut(iadata$avgnum_poormenth, quantile(iadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$uninsQuint <- cut(iadata$pct_unins, quantile(iadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$menthprovQuint <- cut(iadata$menthprov_per100k, abs(quantile(desc(iadata$menthprov_per100k), prob = seq(0, 1, length = 6), na.rm = TRUE)), labels = FALSE, include.lowest = TRUE)
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$menthdaysQuint <- cut(iadata$avgnum_poormenth, quantile(iadata$avgnum_poormenth, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$uninsQuint <- cut(iadata$pct_unins, quantile(iadata$pct_unins, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$menthprovQuint <- cut(iadata$menthprov_per100k, quantile(iadata$menthprov_per100k, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$menthprovQuint <- case_when(iadata$menthprovQuint == 5 ~ 1,
+                                   iadata$menthprovQuint == 4 ~ 2,
+                                   iadata$menthprovQuint == 3 ~ 3,
+                                   iadata$menthprovQuint == 2 ~ 4,
+                                   iadata$menthprovQuint == 1 ~ 5,
+                                   is.na(iadata$menthprovQuint) ~ NA_real_)
 
 # Get cutoffs for table
 vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
