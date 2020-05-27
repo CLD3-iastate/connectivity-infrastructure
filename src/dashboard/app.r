@@ -72,7 +72,9 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                 br('Using the map selector allows filtering by topic and state. Hovering over a county area on the resulting map displays information 
                                    about the calculated county relative vulnerability status, as well as relevant connectivity and need measures. Supplemental maps
                                    allow users to explore individual indicators used to create the three relative vulnerabilty measures.
-                                   Methodology, data source, and measure descriptions are available below.')
+                                   Methodology, data source, and measure descriptions are available below.'),
+                                p(),
+                                br('If you are looking for our broadband internet dashboard, click', a(href = 'https://bband.policy-analytics.net', 'here.', target = "_blank"))
                                 ),
                          column(1)
                                 ),
@@ -1078,8 +1080,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1127,8 +1128,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1176,8 +1176,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1230,8 +1229,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1279,8 +1277,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1328,8 +1325,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1381,8 +1377,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1430,8 +1425,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1479,8 +1473,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1528,8 +1521,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1550,7 +1542,7 @@ server <- function(input, output) {
               data$name,
               "<br />",
               "<strong>% Population without health insurance:</strong>",
-              data$pct_unins, "(quintile", data$uninsQuint, ")",
+              round(data$pct_unins, 2),
               "<br />",
               "<strong>Quintile:</strong>",
               data$uninsQuint),
@@ -1577,8 +1569,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
@@ -1626,8 +1617,7 @@ server <- function(input, output) {
                   na.label = "Not Available",
                   labFormat = function(type, cuts, p) {
                     n = length(cuts)
-                    p = paste0(round(p * 100), '%')
-                    cuts = paste0("[", formatC(cuts[-n]), " - ", formatC(cuts[-1]), ")")
+                    paste0("[", round(cuts[-n], 2), " &ndash; ", round(cuts[-1], 2), ")")
                   })
     }
   })
