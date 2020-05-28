@@ -167,6 +167,13 @@ vadata <- vadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 vadata$vulnerability <- factor(vadata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
 
+vadata <- vadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+vadata$accessibility <- factor(vadata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 3 ~ "High",
   nointernetTop + nocomputerTop + ink12Top == 2 ~ "Medium",
@@ -174,12 +181,26 @@ iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 iadata$vulnerability <- factor(iadata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
 
+iadata <- iadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+iadata$accessibility <- factor(iadata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 3 ~ "High",
   nointernetTop + nocomputerTop + ink12Top == 2 ~ "Medium",
   nointernetTop + nocomputerTop + ink12Top == 1 ~ "Low",      
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
+
+ordata <- ordata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+ordata$accessibility <- factor(ordata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
 
 # Write out
 write_rds(iadata, "./rivanna_data/working/dashboard/ia_edu.Rds")

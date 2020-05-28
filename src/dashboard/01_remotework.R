@@ -270,6 +270,14 @@ vadata <- vadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 vadata$vulnerability <- factor(vadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
+vadata <- vadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+vadata$accessibility <- factor(vadata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
   nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
@@ -278,6 +286,14 @@ iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 iadata$vulnerability <- factor(iadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
+iadata <- iadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+iadata$accessibility <- factor(iadata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
   nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
@@ -285,6 +301,14 @@ ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "Low",   
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
+ 
+ordata <- ordata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+ordata$accessibility <- factor(ordata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
 
 # Write out
 write_rds(iadata, "./rivanna_data/working/dashboard/ia_work.Rds")

@@ -70,11 +70,11 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                     based on conditions in their counties.')),
                                 p(),
                                 br('Using the map selector allows filtering by topic and state. Hovering over a county area on the resulting map displays information 
-                                   about the calculated county relative vulnerability status, as well as relevant connectivity and need measures. Supplemental maps
-                                   allow users to explore individual indicators used to create the three relative vulnerabilty measures.
+                                   about the calculated county relative accessibility status, as well as relevant connectivity and need measures. Supplemental maps
+                                   allow users to explore individual indicators used to create the three relative accessibility measures.
                                    Methodology, data source, and measure descriptions are available below.'),
                                 p(),
-                                br('If you are looking for our broadband internet dashboard, click', a(href = 'https://bband.policy-analytics.net', 'here.', target = "_blank"))
+                                br('If you would like to explore broadband internet coverage further, please visit our', a(href = 'https://bband.policy-analytics.net', 'broadband data source comparison', target = "_blank"), 'dashboard.')
                                 ),
                          column(1)
                                 ),
@@ -84,77 +84,77 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 fluidRow(width = 12, style = "margin: 20px",
                          h2('Measures and Data Sources'),
                          tabsetPanel(
-                           tabPanel(title = "Remote Work Vulnerability", 
-                                    wellPanel(strong('Remote Work Vulnerability'), 
+                           tabPanel(title = "Remote Work Accessibility", 
+                                    wellPanel(strong('Remote Work Accessibility'), 
                                               p(),
                                               em('Description.'),
-                                              br(), tags$b('The remote work relative vulnerability measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
+                                              br(), tags$b('The remote work relative accessibility measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
                                               ('It conceptualizes four telecommunication infrastructure and employment characteristics as potential barriers, providing
                                               a relative ranking of county telework preparedness.'),
                                               p(),
-                                              em('How We Measure Remote Work Vulnerability.'),
-                                              br('We calculate remote work relative vulnerability using information on percent:'),
+                                              em('How We Measure Remote Work Accessibility.'),
+                                              br('We calculate remote work relative accessibility using information on percent:'),
                                               tags$li('Households with no broadband internet subscription.'),
                                               tags$li('Persons in labor force with no computer available.'),
                                               tags$li('Persons who are not currently working remotely and are employed in telework unfriendly occupations
                                                      (service, natural, construction, maintenance, production, transportation, material moving, and military specific occupations).'),
                                               tags$li('Persons who are not currently working remotely and are employed in telework unfriendly industries 
                                                 (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'),
-                                              br('We compute quintile cut-offs for each indicator. We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
-                                              tags$li('Very high: all 4 indicators.'),
-                                              tags$li('High: 3 indicators.'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('Very high: 0 indicators.'),
+                                              tags$li('High: 1 indicator.'),
                                               tags$li('Medium: 2 indicators.'), 
-                                              tags$li('Low: 1 indicator.'),
-                                              tags$li('None: 0 indicators.'),
+                                              tags$li('Low: 3 indicators.'),
+                                              tags$li('Very low: all 4 indicators.'),
                                               p(),
                                               em('Data source.'),
                                               p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
                                     )),
-                           tabPanel(title = "Remote Education Vulnerability", 
-                                    wellPanel(strong('Remote Education Vulnerability'), 
+                           tabPanel(title = "Remote Education Accessibility", 
+                                    wellPanel(strong('Remote Education Accessibility'), 
                                               p(),
                                               em('Description.'),
-                                              br(), tags$b('The remote education relative vulnerability measure highlights counties where K-12 students may have difficulty participating in online education.'), 
+                                              br(), tags$b('The remote education relative accessibility measure highlights counties where K-12 students may have difficulty participating in online education.'), 
                                               ('It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'),
                                               p(),
-                                              em('How We Measure Remote Education Vulnerability.'),
-                                              br('We calculate remote education relative vulnerability using information on percent:'),
+                                              em('How We Measure Remote Education Accessibility.'),
+                                              br('We calculate remote education relative accessibility using information on percent:'),
                                               tags$li('Households with no internet access subscription.'),
                                               tags$li('Population under age 18 without a computer.'),
                                               tags$li('Population enrolled in K-12.'),
-                                              br('We compute quintile cut-offs for each indicator.
-                                                We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
-                                              tags$li('High: all 3 indicators.'),
-                                              tags$li('Medium: 2 indicators.'),
-                                              tags$li('Low: 1 indicator.'),
-                                              tags$li('None: 0 indicators.'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('High: 0 indicators.'),
+                                              tags$li('Medium: 1 indicator.'),
+                                              tags$li('Low: 2 indicators.'),
+                                              tags$li('Very low: all 3 indicators.'),
                                               p(),
                                               em('Data source.'),
                                               p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
                                     )),
-                           tabPanel(title = "Telemental Health Vulnerability", 
-                                    wellPanel(strong('Telemental Health Vulnerability'), 
+                           tabPanel(title = "Telemental Health Accessibility", 
+                                    wellPanel(strong('Telemental Health Accessibility'), 
                                               p(),
                                               em('Description.'),
-                                              br(), tags$b('The telemental health relative vulnerability measure highlights counties where high need for mental health services is coupled with
+                                              br(), tags$b('The telemental health relative accessibility measure highlights counties where high need for mental health services is coupled with
                                                   barriers to access.'), ('It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
-                                                                          in providing a relative ranking of county K-12 telemental health vulnerability.'),
+                                                                          in providing a relative ranking of county K-12 telemental health accessibility.'),
                                               p(),
-                                              em('How We Measure Telemental Health Vulnerability.'),
-                                              br('We calculate telemental health relative vulnerability using information on:'),
+                                              em('How We Measure Telemental Health Accessibility.'),
+                                              br('We calculate telemental health relative accessibility using information on:'),
                                               tags$li('Percent households without internet access.'),
                                               tags$li('Percent households with no computer.'),
                                               tags$li('Average number of poor mental health days in past month.'),
                                               tags$li('Number of mental health providers per 100,000 population (reverse-coded).'),
                                               tags$li('Percent population under age 65 without health insurance.'),
-                                              br('We compute quintile cut-offs for each indicator.
-                                                We assign descriptive labels for county relative vulnerability based on whether they placed in 4th or 5th quintile a certain number of times:'),
-                                              tags$li('Very high: all 5 indicators'),
-                                              tags$li('High: 4 indicators.'),
-                                              tags$li('Medium: 3 indicators.'),
-                                              tags$li('Low: 2 indicators.'),
-                                              tags$li('Very low: 1 indicator.'),
-                                              tags$li('None: 0 indicators.'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                              tags$li('Very high: 0 indicators.'),
+                                              tags$li('High: 1 indicator.'),
+                                              tags$li('Medium: 2 or 3 indicators.'),
+                                              tags$li('Low: 4 indicators.'),
+                                              tags$li('Very low: all 5 indicators'),
                                               p(),
                                               em('Data source.'),
                                               p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates and",
@@ -167,7 +167,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 
                 fluidRow(style = "margin: 6px",
                          width = 12, 
-                         column(12, align = "left", h3(strong("Explore County Relative Vulnerability")))
+                         column(12, align = "left", h3(strong("Explore County Relative Accessibility")))
                 ),
                 
                 fluidRow(style = "margin: 6px",
@@ -207,7 +207,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                 h3(strong("Explore Ranking Indicators")),
                                 p(),
                                 p(strong("Click on the tabs to explore the individual indicators we used to 
-                                  construct the selected relative vulnerability measure."), "Each tab displays a 
+                                  construct the selected relative accessibility measure."), "Each tab displays a 
                                   box plot with descriptive statistics and a state map at county level for an individual indicator. 
                                   The selection of indicators will update depending on the topic selected."))
                 ),
@@ -473,7 +473,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(6, align = "center",
                                 h2("Acknowledgments"),
                                 br("We used the quintile method described by the", a(href = "https://pcrd.purdue.edu/blog/remote-work-and-the-coronavirus.php", "Purdue Center for Regional Development"), 
-                                   "to construct our relative vulnerability measures. One of our indicators, remote work vulnerability, is also an adaptation of Purdue's remote work metric. 
+                                   "to construct our relative accessibility measures. One of our indicators, remote work accessibility, is also an adaptation of Purdue's remote work metric. 
                                    We depart from their operationalization in using American Community Survey instead of Federal Communications Commission (FCC) data given", a(href = "https://bband.policy-analytics.net", "known issues with FCC Form 477"),
                                    ", as well as in tailoring indicators used to the population in the labor force and to the labor force population that reports not already working from home.")
                          ),
@@ -809,14 +809,14 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorFactor("Oranges", domain = data$vulnerability)
+      pal <- colorFactor("Oranges", domain = data$accessibility)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
               data$name,
               "<br />",
-              "<strong>Relative vulnerability:</strong>",
-              data$vulnerability,
+              "<strong>Relative accessibility:</strong>",
+              data$accessibility,
               "<br />",
               "<strong>Placed in 4th or 5th quintile:</strong>",
               data$scoreTop, " times",
@@ -834,7 +834,7 @@ server <- function(input, output) {
       
       leaflet(data) %>%
         addTiles() %>%
-        addPolygons(fillColor = ~pal(data$vulnerability), 
+        addPolygons(fillColor = ~pal(data$accessibility), 
                     fillOpacity = 0.8,
                     stroke = TRUE,
                     weight = 0.9,
@@ -847,8 +847,8 @@ server <- function(input, output) {
                                                   "border-color" = "rgba(0,0,0,0.5)",
                                                   direction = "auto"
                                                 ))) %>%
-        addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1,
+        addLegend("bottomleft", pal = pal, values = ~data$accessibility,
+                  title = "Relative Accessibility", opacity = 1,
                   na.label = "Not Available")
       
       # Main plot: remote work
@@ -859,14 +859,14 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorFactor("Oranges", domain = data$vulnerability)
+      pal <- colorFactor("Oranges", domain = data$accessibility)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
               data$name,
               "<br />",
-              "<strong>Relative vulnerability:</strong>",
-              data$vulnerability,
+              "<strong>Relative accessibility:</strong>",
+              data$accessibility,
               "<br />",
               "<strong>Placed in 4th or 5th quintile:</strong>",
               data$scoreTop, " times",
@@ -887,7 +887,7 @@ server <- function(input, output) {
       
       leaflet(data) %>%
         addTiles() %>%
-        addPolygons(fillColor = ~pal(data$vulnerability), 
+        addPolygons(fillColor = ~pal(data$accessibility), 
                     fillOpacity = 0.8,
                     stroke = TRUE,
                     weight = 0.9,
@@ -900,8 +900,8 @@ server <- function(input, output) {
                                                   "border-color" = "rgba(0,0,0,0.5)",
                                                   direction = "auto"
                                                 ))) %>%
-        addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1,
+        addLegend("bottomleft", pal = pal, values = ~data$accessibility,
+                  title = "Relative Accessibility", opacity = 1,
                   na.label = "Not Available")
       
       # Main plot: telehealth
@@ -912,14 +912,14 @@ server <- function(input, output) {
                      "Oregon" = data[data$STATEFP == "41", ],
                      "Virginia" = data[data$STATEFP == "51", ])
       
-      pal <- colorFactor("Oranges", domain = data$vulnerability)
+      pal <- colorFactor("Oranges", domain = data$accessibility)
       
       labels <- lapply(
         paste("<strong>County: </strong>",
               data$name,
               "<br />",
-              "<strong>Relative vulnerability:</strong>",
-              data$vulnerability,
+              "<strong>Relative accessibility:</strong>",
+              data$accessibility,
               "<br />",
               "<strong>Placed in 4th or 5th quintile:</strong>",
               data$scoreTop, " times",
@@ -943,7 +943,7 @@ server <- function(input, output) {
       
       leaflet(data) %>%
         addTiles() %>%
-        addPolygons(fillColor = ~pal(data$vulnerability), 
+        addPolygons(fillColor = ~pal(data$accessibility), 
                     fillOpacity = 0.8,
                     stroke = TRUE,
                     weight = 0.9,
@@ -956,8 +956,8 @@ server <- function(input, output) {
                                                   "border-color" = "rgba(0,0,0,0.5)",
                                                   direction = "auto"
                                                 ))) %>%
-        addLegend("bottomleft", pal = pal, values = ~data$vulnerability,
-                  title = "Relative Vulnerability", opacity = 1,
+        addLegend("bottomleft", pal = pal, values = ~data$accessibility,
+                  title = "Relative Accessibility", opacity = 1,
                   na.label = "Not Available")
     }
   })
