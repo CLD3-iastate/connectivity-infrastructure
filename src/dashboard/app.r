@@ -64,7 +64,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(10, 
                                 p(),
                                 br(tags$b('This dashboard visualizes three measures of connectivity infrastructure as barriers to remote work, education, and mental health care.'), 
-                                   ('It facilitates relative comparisons between counties within states, highlighting areas where workers may have difficulty working remotely, where youth would
+                                   ('It facilitates relative comparisons between counties within states, highlighting areas where workers may have difficulty working remotely, where youth could
                                      face barriers to participating in online education, and where county residents may have high need but low access to telemental health services. 
                                      The dashboard allows extension professionals and policy-makers in Iowa, Oregon, and Virginia to make informed decisions about interventions and resource allocation
                                     based on conditions in their counties.')),
@@ -74,7 +74,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                    allow users to explore individual indicators used to create the three relative accessibility measures.
                                    Methodology, data source, and measure descriptions are available below.'),
                                 p(),
-                                br('If you would like to explore broadband internet coverage further, please visit our', a(href = 'https://bband.policy-analytics.net', 'broadband data source comparison', target = "_blank"), 'dashboard.')
+                                br('If you would like to explore broadband internet coverage further, we invite you to visit our', a(href = 'https://bband.policy-analytics.net', 'broadband data source comparison', target = "_blank"), 'dashboard.')
                                 ),
                          column(1)
                                 ),
@@ -101,7 +101,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                               tags$li('Persons who are not currently working remotely and are employed in telework unfriendly industries 
                                                 (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'),
                                               br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times. 
+                                                 The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote work accessibility:'),
                                               tags$li('Very high: 0 indicators.'),
                                               tags$li('High: 1 indicator.'),
                                               tags$li('Medium: 2 indicators.'), 
@@ -124,7 +125,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                               tags$li('Population under age 18 without a computer.'),
                                               tags$li('Population enrolled in K-12.'),
                                               br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
+                                                The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote education accessibility:'),
                                               tags$li('High: 0 indicators.'),
                                               tags$li('Medium: 1 indicator.'),
                                               tags$li('Low: 2 indicators.'),
@@ -149,7 +151,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                               tags$li('Number of mental health providers per 100,000 population (reverse-coded).'),
                                               tags$li('Percent population under age 65 without health insurance.'),
                                               br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times:'),
+                                                We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
+                                                The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative telemental health accessibility:'),
                                               tags$li('Very high: 0 indicators.'),
                                               tags$li('High: 1 indicator.'),
                                               tags$li('Medium: 2 or 3 indicators.'),
@@ -195,7 +198,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(width = 9, 
                                 h4(strong("County Map"), align = "left"),
                                 p(),
-                                leafletOutput("mainplot", width = "800px")
+                                leafletOutput("mainplot", width = "100%")
                          )
                          ),
                 
@@ -226,13 +229,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_noint_work"),
+                                                            plotlyOutput("plotly_noint_work", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_work"))
+                                                            leafletOutput("subplot_noint_work", width = "100%"))
                                             ),
                                             tabPanel(title = "Workers without computer", 
                                                      br(),
@@ -244,13 +247,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_nocomp_work"),
+                                                            plotlyOutput("plotly_nocomp_work", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_work"))
+                                                            leafletOutput("subplot_nocomp_work", width = "100%"))
                                             ),
                                             tabPanel(title = "Non-remote workers in remote unfriendly occupations", 
                                                      br(),
@@ -262,13 +265,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_occup"),
+                                                            plotlyOutput("plotly_occup", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_occup"))
+                                                            leafletOutput("subplot_occup", width = "100%"))
                                             ),
                                             tabPanel(title = "Non-remote workers in remote unfriendly industries", 
                                                      br(),
@@ -280,13 +283,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_industr"),
+                                                            plotlyOutput("plotly_industr", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_industr"))
+                                                            leafletOutput("subplot_industr", width = "100%"))
                                             )
                                             )
                                           )
@@ -305,13 +308,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_noint_edu"),
+                                                            plotlyOutput("plotly_noint_edu", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_edu"))
+                                                            leafletOutput("subplot_noint_edu", width = "100%"))
                                             ),
                                             tabPanel(title = "Youth without computer", 
                                                      br(),
@@ -323,13 +326,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_nocomp_edu"),
+                                                            plotlyOutput("plotly_nocomp_edu", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_edu"))
+                                                            leafletOutput("subplot_nocomp_edu", width = "100%"))
                                             ),
                                             tabPanel(title = "Population in K-12", 
                                                      br(),
@@ -341,13 +344,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_ink12"),
+                                                            plotlyOutput("plotly_ink12", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_ink12"))
+                                                            leafletOutput("subplot_ink12", width = "100%"))
                                             )
                                           )
                                  )
@@ -366,13 +369,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_noint_med"),
+                                                            plotlyOutput("plotly_noint_med", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_noint_med"))
+                                                            leafletOutput("subplot_noint_med", width = "100%"))
                                             ),
                                             tabPanel(title = "Households without computer", 
                                                      br(),
@@ -384,13 +387,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_nocomp_med"),
+                                                            plotlyOutput("plotly_nocomp_med", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_nocomp_med"))
+                                                            leafletOutput("subplot_nocomp_med", width = "100%"))
                                             ),
                                             tabPanel(title = "Population uninsured", 
                                                      br(),
@@ -402,13 +405,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_unins"),
+                                                            plotlyOutput("plotly_unins", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_unins"))
+                                                            leafletOutput("subplot_unins", width = "100%"))
                                             ),
                                             tabPanel(title = "Poor mental health days", 
                                                      br(),
@@ -420,13 +423,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_menthdays"),
+                                                            plotlyOutput("plotly_menthdays", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_poorment"))
+                                                            leafletOutput("subplot_poorment", width = "100%"))
                                             ),
                                             tabPanel(title = "Mental health providers", 
                                                      br(),
@@ -438,13 +441,13 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                             p(),
                                                             strong("County-Level Box Plot"),
                                                             p(),
-                                                            plotlyOutput("plotly_menthprov"),
+                                                            plotlyOutput("plotly_menthprov", width = "100%"),
                                                             p()),
                                                      column(6, align = "left",
                                                             p(),
                                                             strong("County-Level Map"),
                                                             p(),
-                                                            leafletOutput("subplot_healthprov"))
+                                                            leafletOutput("subplot_healthprov", width = "100%"))
                                             )
                                           )
                                  )
@@ -458,12 +461,12 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                   The bottom of the box represents the lower quartile; 25% of counties have indicator values below this threshold. Similarly, the top of the box represents the upper quartile, with 25% of counties having 
                                   indicator values above this threshold. The body of the box represents the interquartile range, capturing indicator values for 50% of all counties. The horizontal line drawn through the box is the median 
                                   -- the middle quartile or the midpoint value in the distribution. Half of all counties have indicator values below this threshold, and half have indicator values above the threshold.
-                                  Dots represent outlier values. Hover over the boxplot to view exact summary values.")),
+                                  Dots represent counties with outlier values. Hover over the boxplot to view exact summary values.")),
                          column(6, align = "left",
                                 tags$em("How to interpret this map."),
-                                p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have a higher value on the selected indicator. Conversely, counties with lighter colors have lower
+                                p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have higher values on the selected indicator. Conversely, counties with lighter colors have lower
                                   values on the selected indicator. To facilitate comparisons and display quintile cut-off points, map colors represent quintile-grouped values. To view the exact indicator value for a particular county, hover over the county on the map. The information
-                                  box will display the county name, exact indicator value, and its corresponding quintile."))
+                                  box will display the county name, the indicator value rounded to two decimal points, and the corresponding quintile."))
                          ),
                 
                 hr(),
@@ -479,7 +482,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          ),
                          column(6, align = "center",
                                 h2("Contact"),
-                                br(a(href = "https://biocomplexity.virginia.edu/teja-pristavec", "Teja Pristavec")),
+                                br(a(href = "https://biocomplexity.virginia.edu/teja-pristavec", "Teja Pristavec, PhD")),
                                 br(a(href = "https://biocomplexity.virginia.edu/social-decision-analytics", "Social and Decision Analytics Division", target = "_blank"),
                                    br("Biocomplexity Institute and Initiative, University of Virginia")
                                 )
@@ -491,7 +494,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 fluidRow(style = "margin: 20px",
                          width = 12, 
                          column(12, align = 'center',
-                                em('Last updated: May 2020'))
+                                em('Last updated: June 2020'))
                 )
                 
                 )
