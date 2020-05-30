@@ -94,20 +94,79 @@ temp1 <- merge(ALL, PR_4YR, by=c("Locality", "FIPS"))
 temp2 <- merge(PUB_4YR, PUB_2YR, by=c("Locality", "FIPS"))
 higher_ed <- merge(temp1, temp2, by=c("Locality", "FIPS"))
 
-#
-#  format FIPS columns --------------------------------------------
-#
 
-higher_ed <- higher_ed %>% mutate(
+higher_ed<- higher_ed %>% mutate(
   STATEFP = substr(FIPS, start=1, stop=2),
   COUNTYFP = substr(FIPS, start=4, stop=6)
 )
 
 higher_ed$FIPS = NULL
-higher_ed <- higher_ed[c(1, 42, 43, 2:41)]
 
 miss_var_summary(higher_ed)  # no missing data
 
-write_rds(higher_ed, "./Data/schev.rds")
+write_rds(higher_ed, "./Data/hi_ed_schev.rds")
+
+
+#
+# Add in PELL data ------------------------------------------
+#
+
+pellALL <- read_excel("./Data/Pell.xlsx", sheet = "ALL", col_names=TRUE, 
+                      col_types = "text")
+pellPR4 <- read_excel("./Data/Pell.xlsx", sheet = "PR4YR", col_names=TRUE, 
+                      col_types = "text")
+pellPUB4 <- read_excel("./Data/Pell.xlsx", sheet = "PUB4", col_names=TRUE,
+                       col_types = "text")
+pellPUB2 <- read_excel("./Data/Pell.xlsx", sheet = "PUB2", col_names=TRUE, 
+                       col_types = "text")
+
+# merge pell files into one dataframe
+
+setdiff(pellALL$`VA County/City`, pellPR4$`VA County/City`) # clifton forge city, in-state military unknown
+setdiff(pellPR4$`VA County/City`, pellALL$`VA County/City`)  
+setdiff(pellALL$`VA County/City`, pellPUB4$`VA County/City`) 
+setdiff(pellPUB4$`VA County/City`, pellALL$`VA County/City`) 
+setdiff(pellALL$`VA County/City`, pellPUB2$`VA County/City`) # clifton forge city, in-state military unknown
+setdiff(pellPUB2$`VA County/City`, pellALL$`VA County/City`) 
+
+setdiff(pellPR4$`VA County/City`, pellPUB4$`VA County/City`)
+setdiff(pellPUB4$`VA County/City`, pellPR4$`VA County/City`) # clifton forge city, in-state military unknown
+setdiff(pellPR4$`VA County/City`, pellPUB2$`VA County/City`)
+setdiff(pellPUB2$`VA County/City`, pellPR4$`VA County/City`)
+
+setdiff(pellPUB4$`VA County/City`, pellPUB2$`VA County/City`) # clifton forge city, in-state military unknown
+setdiff(pellPUB2$`VA County/City`, pellPUB4$`VA County/City`)
+
+# Ignoring in-state military unknown, and clifton forge is a town (2001) so also ignoring
+
+# merge pell dataframes
+
+t1 <- merge(pellALL, pellPUB4, by="VA County/City", all=TRUE) #outer join
+t2 <- merge(pellPR4, pellPUB2, by="VA County/City", all=TRUE) #outer join
+pell <- merge(t1, t2, by="VA County/City", all=TRUE) #outer join
+
+
+#
+#  format FIPS columns --------------------------------------------
+#
+
+
+pell <- pell %>% mutate(
+  STATEFP = substr(FIPS, start=1, stop=2),
+  COUNTYFP = substr(FIPS, start=4, stop=6)
+)
+
+pell$FIPS = NULL
+
+# merge higher ed and pell ----------------------------
+
+setdiff(pell$COUNTYFP, higher_ed$COUNTYFP) #NA - Clifton Forge.
+setdiff(higher_ed$COUNTYFP, pell$COUNTYFP)
+
+pell_new <- merge(pell, higher_ed[c("STATEFP", "COUNTYFP")], by=c("STATEFP", "COUNTYFP")) #inner join
+
+miss_var_summary(pell_new)  # no missing data
+
+write_rds(pell_new, "./Data/pell_schev.rds")
 
 
