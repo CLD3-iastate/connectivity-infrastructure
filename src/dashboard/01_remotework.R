@@ -199,20 +199,20 @@ ordata <- data %>% filter(STATEFP == 41)
 #
 
 # Find quintiles:
-vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)   
-vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$occupQuint <- cut(vadata$occup, quantile(vadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$industrQuint <- cut(vadata$industr, quantile(vadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)   
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$occupQuint <- cut(vadata$occup, quantile(vadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$industrQuint <- cut(vadata$industr, quantile(vadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
-ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$occupQuint <- cut(ordata$occup, quantile(ordata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$industrQuint <- cut(ordata$industr, quantile(ordata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$occupQuint <- cut(ordata$occup, quantile(ordata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$industrQuint <- cut(ordata$industr, quantile(ordata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
-iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$occupQuint <- cut(iadata$occup, quantile(iadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$industrQuint <- cut(iadata$industr, quantile(iadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$occupQuint <- cut(iadata$occup, quantile(iadata$occup, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$industrQuint <- cut(iadata$industr, quantile(iadata$industr, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
 # Get cutoffs for table
 vaqint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
@@ -270,6 +270,14 @@ vadata <- vadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 vadata$vulnerability <- factor(vadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
+vadata <- vadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+vadata$accessibility <- factor(vadata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
   nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
@@ -278,6 +286,14 @@ iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 iadata$vulnerability <- factor(iadata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
 
+iadata <- iadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+iadata$accessibility <- factor(iadata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very High",
   nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "High",
@@ -285,6 +301,14 @@ ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "Low",   
   nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High", "Very High"), ordered = TRUE)
+ 
+ordata <- ordata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + occupTop + industrTop == 4 ~ "Very Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 3 ~ "Low",
+  nointernetTop + nocomputerTop + occupTop + industrTop == 2 ~ "Medium",       
+  nointernetTop + nocomputerTop + occupTop + industrTop == 1 ~ "High",   
+  nointernetTop + nocomputerTop + occupTop + industrTop == 0 ~ "Very High"))
+ordata$accessibility <- factor(ordata$accessibility, levels = c("Very High", "High", "Medium", "Low", "Very Low"), ordered = TRUE)
 
 # Write out
 write_rds(iadata, "./rivanna_data/working/dashboard/ia_work.Rds")

@@ -106,17 +106,17 @@ ordata <- data %>% filter(STATEFP == 41)
 #
 
 # Find quintiles:
-vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-vadata$ink12Quint <- cut(vadata$ink12, quantile(vadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+vadata$nointernetQuint <- cut(vadata$nointernet, quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$nocomputerQuint <- cut(vadata$nocomputer, quantile(vadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+vadata$ink12Quint <- cut(vadata$ink12, quantile(vadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
-ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-ordata$ink12Quint <- cut(ordata$ink12, quantile(ordata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+ordata$nointernetQuint <- cut(ordata$nointernet, quantile(ordata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$nocomputerQuint <- cut(ordata$nocomputer, quantile(ordata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+ordata$ink12Quint <- cut(ordata$ink12, quantile(ordata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
-iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
-iadata$ink12Quint <- cut(iadata$ink12, quantile(iadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE)
+iadata$nointernetQuint <- cut(iadata$nointernet, quantile(iadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$nocomputerQuint <- cut(iadata$nocomputer, quantile(iadata$nocomputer, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
+iadata$ink12Quint <- cut(iadata$ink12, quantile(iadata$ink12, prob = seq(0, 1, length = 6), na.rm = TRUE), labels = FALSE, include.lowest = TRUE, right = FALSE)
 
 # Get cutoffs for table
 vaqnoint <- quantile(vadata$nointernet, prob = seq(0, 1, length = 6), na.rm = TRUE)
@@ -167,6 +167,13 @@ vadata <- vadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 vadata$vulnerability <- factor(vadata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
 
+vadata <- vadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+vadata$accessibility <- factor(vadata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 3 ~ "High",
   nointernetTop + nocomputerTop + ink12Top == 2 ~ "Medium",
@@ -174,12 +181,26 @@ iadata <- iadata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 iadata$vulnerability <- factor(iadata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
 
+iadata <- iadata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+iadata$accessibility <- factor(iadata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
+
 ordata <- ordata %>% mutate(vulnerability = case_when(
   nointernetTop + nocomputerTop + ink12Top == 3 ~ "High",
   nointernetTop + nocomputerTop + ink12Top == 2 ~ "Medium",
   nointernetTop + nocomputerTop + ink12Top == 1 ~ "Low",      
   nointernetTop + nocomputerTop + ink12Top == 0 ~ "None"))
 ordata$vulnerability <- factor(ordata$vulnerability, levels = c("None", "Low", "Medium", "High"), ordered = TRUE)
+
+ordata <- ordata %>% mutate(accessibility = case_when(
+  nointernetTop + nocomputerTop + ink12Top == 3 ~ "Very Low",
+  nointernetTop + nocomputerTop + ink12Top == 2 ~ "Low",
+  nointernetTop + nocomputerTop + ink12Top == 1 ~ "Medium",      
+  nointernetTop + nocomputerTop + ink12Top == 0 ~ "High"))
+ordata$accessibility <- factor(ordata$accessibility, levels = c("High", "Medium", "Low", "Very Low"), ordered = TRUE)
 
 # Write out
 write_rds(iadata, "./rivanna_data/working/dashboard/ia_edu.Rds")
