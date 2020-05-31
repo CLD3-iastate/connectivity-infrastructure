@@ -43,7 +43,6 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 ),
                 
                 fluidRow(width = 12, 
-                         stype = "padding-top:20px; padding-bottom:20px",
                          column(1),
                          column(10, align = "center", h2(strong("Connectivity Infrastructure as Barrier to Remote Work, Education, and Mental Health Care: County Explorer"))),
                          column(1)
@@ -56,9 +55,9 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(10, align = 'center',
                                 em('This dashboard was created at the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative,
                                    University of Virginia.')
-                         ),
+                                ),
                          column(1)
-                ),
+                         ),
                 
                 fluidRow(width = 12,
                          column(1),
@@ -69,469 +68,426 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                     face barriers to participating in online education, and where county residents may have high need but low access to telemental health services. 
                                     The dashboard allows extension professionals and policy-makers in Iowa, Oregon, and Virginia to make informed decisions about interventions and resource allocation
                                     based on conditions in their counties.')),
-                                p()
-                         ),
+                                p(),
+                                br('Using the map selector allows filtering by topic and state. Hovering over a county area on the resulting map displays information 
+                                   about the calculated county relative accessibility status, as well as relevant connectivity and need measures. Supplemental maps
+                                   allow users to explore individual indicators used to create the three relative accessibility measures.
+                                   Methodology, data source, and measure descriptions are available below.'),
+                                p(),
+                                br('If you would like to explore broadband internet coverage further, we invite you to visit our', a(href = 'https://bband.policy-analytics.net', 'broadband data source comparison', target = "_blank"), 'dashboard.')
+                                ),
                          column(1)
+                                   ),
+                
+                hr(),
+                
+                fluidRow(width = 12, style = "margin: 20px",
+                         h2('Measures and Data Sources'),
+                         tabsetPanel(
+                           tabPanel(title = "Remote Work Accessibility", 
+                                    wellPanel(strong('Remote Work Accessibility'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The remote work relative accessibility measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
+                                              ('It conceptualizes four telecommunication infrastructure and employment characteristics as potential barriers, providing
+                                               a relative ranking of county telework preparedness.'),
+                                              p(),
+                                              em('How We Measure Remote Work Accessibility.'),
+                                              br('We calculate remote work relative accessibility using information on percent:'),
+                                              tags$li('Households with no broadband internet subscription.'),
+                                              tags$li('Persons in labor force with no computer available.'),
+                                              tags$li('Persons who are not currently working remotely and are employed in telework unfriendly occupations
+                                                      (service, natural, construction, maintenance, production, transportation, material moving, and military specific occupations).'),
+                                              tags$li('Persons who are not currently working remotely and are employed in telework unfriendly industries 
+                                                      (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times. 
+                                                 The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote work accessibility:'),
+                                              tags$li('Very high: 0 indicators.'),
+                                              tags$li('High: 1 indicator.'),
+                                              tags$li('Medium: 2 indicators.'), 
+                                              tags$li('Low: 3 indicators.'),
+                                              tags$li('Very low: all 4 indicators.'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
+                                              )),
+                           tabPanel(title = "Remote Education Accessibility", 
+                                    wellPanel(strong('Remote Education Accessibility'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The remote education relative accessibility measure highlights counties where K-12 students may have difficulty participating in online education.'), 
+                                              ('It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'),
+                                              p(),
+                                              em('How We Measure Remote Education Accessibility.'),
+                                              br('We calculate remote education relative accessibility using information on percent:'),
+                                              tags$li('Households with no internet access subscription.'),
+                                              tags$li('Population under age 18 without a computer.'),
+                                              tags$li('Population enrolled in K-12.'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
+                                                 The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote education accessibility:'),
+                                              tags$li('High: 0 indicators.'),
+                                              tags$li('Medium: 1 indicator.'),
+                                              tags$li('Low: 2 indicators.'),
+                                              tags$li('Very low: all 3 indicators.'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
+                                              )),
+                           tabPanel(title = "Telemental Health Accessibility", 
+                                    wellPanel(strong('Telemental Health Accessibility'), 
+                                              p(),
+                                              em('Description.'),
+                                              br(), tags$b('The telemental health relative accessibility measure highlights counties where high need for mental health services is coupled with
+                                                           barriers to access.'), ('It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
+                                                                                   in providing a relative ranking of county K-12 telemental health accessibility.'),
+                                              p(),
+                                              em('How We Measure Telemental Health Accessibility.'),
+                                              br('We calculate telemental health relative accessibility using information on:'),
+                                              tags$li('Percent households without internet access.'),
+                                              tags$li('Percent households with no computer.'),
+                                              tags$li('Average number of poor mental health days in past month.'),
+                                              tags$li('Number of mental health providers per 100,000 population (reverse-coded).'),
+                                              tags$li('Percent population under age 65 without health insurance.'),
+                                              br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
+                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
+                                                 The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative telemental health accessibility:'),
+                                              tags$li('Very high: 0 indicators.'),
+                                              tags$li('High: 1 indicator.'),
+                                              tags$li('Medium: 2 or 3 indicators.'),
+                                              tags$li('Low: 4 indicators.'),
+                                              tags$li('Very low: all 5 indicators'),
+                                              p(),
+                                              em('Data source.'),
+                                              p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates and",
+                                                a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources', 'County Health Rankings', target = "_blank"), "2019.")
+                                              ))
+                                    )
+                           ),
+                
+                hr(),
+                
+                fluidRow(style = "margin: 6px",
+                         width = 12, 
+                         column(12, align = "left", h3(strong("Explore County Relative Accessibility")))
                 ),
                 
+                fluidRow(style = "margin: 6px",
+                         column(width = 3,
+                                h4(strong("Selector"), align = "left"),
+                                p(), 
+                                selectInput("whichtopic", "Topic", 
+                                            choices = list("Remote education",
+                                                           "Remote work",
+                                                           "Telemental health"), 
+                                            selected = "Remote education"),
+                                p(),
+                                selectInput("whichstate", "State", 
+                                            choices = list("Iowa",
+                                                           "Oregon",
+                                                           "Virginia"), 
+                                            selected = "Iowa"),
+                                p(),
+                                p("Use the tools above to select your topic and state of interest.
+                                  The selected map will display on the right, and individual indicators associated
+                                  with the selected topic will be come available for further exploration below."),
+                                p(),
+                                p("The map may take a moment to load.")
+                                ),
+                         column(width = 9, 
+                                h4(strong("County Map"), align = "left"),
+                                p(),
+                                leafletOutput("mainplot", width = "100%")
+                         )
+                         ),
                 
-                fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px",
-                         tabsetPanel(
-                           tabPanel(title = "Relative Accessibility Maps and Indicators",
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12, 
-                                             column(12, align = "left", 
-                                                    h3(strong("Relative Accessibility Maps")),
-                                                    p(),
-                                                    p(strong("Select a state and topic using the map selector."), 
-                                                      "The resulting maps will display the relative accesibility of remote work, remote education, and telemental health at county-level.",
-                                                      "Select the Data and Methods tab to learn more about how we constructed our composite measures."))
-                                    ),
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             column(width = 3,
-                                                    h4(strong("Selector"), align = "left"),
-                                                    p(), 
-                                                    selectInput("whichtopic", "Topic", 
-                                                                choices = list("Remote education",
-                                                                               "Remote work",
-                                                                               "Telemental health"), 
-                                                                selected = "Remote education"),
-                                                    p(),
-                                                    selectInput("whichstate", "State", 
-                                                                choices = list("Iowa",
-                                                                               "Oregon",
-                                                                               "Virginia"), 
-                                                                selected = "Iowa"),
-                                                    p(),
-                                                    p("Use the tools above to select your topic and state of interest.
-                                                      The selected map will display on the right, and individual indicators associated
-                                                      with the selected topic will be come available for further exploration below."),
-                                                    p(),
-                                                    p("The map may take a moment to load.")
-                                             ),
-                                             column(width = 9, 
-                                                    h4(strong("County Map"), align = "left"),
-                                                    p(),
-                                                    leafletOutput("mainplot", width = "100%")
-                                             )
-                                    ),
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12, 
-                                             column(12, align = "left", 
-                                                    h3(strong("Explore Ranking Indicators")),
-                                                    p(),
-                                                    p(strong("Click on the tabs to explore the individual indicators we used to 
-                                                             construct the selected relative accessibility measure."), "Each tab displays a 
-                                                      box plot with descriptive statistics and a state map at county level for an individual indicator. 
-                                                      The selection of indicators will update depending on the topic selected."))
-                                    ),
-                                    
-                                    conditionalPanel("input.whichtopic == 'Remote work'",
-                                                     fluidRow(style = "margin: 6px",
-                                                              tabsetPanel(
-                                                                tabPanel(title = "Households without broadband", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Households Without Broadband Internet")),
-                                                                         p(),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_noint_work", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_noint_work", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Workers without computer", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Population in Labor Force Without a Computer")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28007&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28007, Labor force status by presence of a computer and types of internet subscription in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_nocomp_work", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_nocomp_work", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Non-remote workers in remote unfriendly occupations", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Occupations")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=B08124%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20OCCUPATION&hidePreview=true&tid=ACSDT5Y2018.B08124', 'Table B08124, Means of transportation to work by occupation.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_occup", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_occup", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Non-remote workers in remote unfriendly industries", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Industries")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=B08126%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20INDUSTRY&hidePreview=true&tid=ACSDT5Y2018.B08126&vintage=2018', 'Table B08126, Means of transportation to work by industry.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_industr", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_industr", width = "100%"))
-                                                                )
-                                                              )
-                                                     )
-                                    ),
-                                    
-                                    conditionalPanel("input.whichtopic == 'Remote education'",
-                                                     fluidRow(style = "margin: 6px",
-                                                              tabsetPanel(
-                                                                tabPanel(title = "Households without internet", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_noint_edu", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_noint_edu", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Youth without computer", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Youth (Age <18) Without a Computer")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28005&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28005, Age by presence of a computer and types of internet subscription in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_nocomp_edu", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_nocomp_edu", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Population in K-12", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Population Enrolled in K-12")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=B14001%3A%20SCHOOL%20ENROLLMENT%20BY%20LEVEL%20OF%20SCHOOL%20FOR%20THE%20POPULATION%203%20YEARS%20AND%20OVER&hidePreview=true&tid=ACSDT5Y2018.B14001&vintage=2018', 'Table B14001,	School enrollment by level of school for the population 3 years and over.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_ink12", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_ink12", width = "100%"))
-                                                                )
-                                                              )
-                                                     )
-                                    ),
-                                    
-                                    conditionalPanel("input.whichtopic == 'Telemental health'",
-                                                     fluidRow(style = "margin: 6px",
-                                                              tabsetPanel(
-                                                                tabPanel(title = "Households without internet", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_noint_med", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_noint_med", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Households without computer", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Households Without a Computer")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28003&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28003, Presence of a computer and type of internet subscription in household.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_nocomp_med", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_nocomp_med", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Population uninsured", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Percent Population Without Health Insurance")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the American Community Survey 2014/18 (5-year) estimates,", 
-                                                                           a(href = 'https://data.census.gov/cedsci/table?q=coverage&tid=ACSDT5Y2018.B27020&d=ACS%205-Year%20Estimates%20Detailed%20Tables&vintage=2018', 'Table B27020, Health insurance coverage status and type by citizenship status.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_unins", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_unins", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Poor mental health days", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Average Number of Poor Mental Health Days in Past Month")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
-                                                                           Data come from the Behavioral Risk Factor Surveillance System 2017 via CountyHealthRankings,", 
-                                                                           a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-outcomes/quality-of-life/poor-mental-health-days', 'Average number of mentally unhealthy days reported in past 30 days (age-adjusted).', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_menthdays", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_poorment", width = "100%"))
-                                                                ),
-                                                                tabPanel(title = "Mental health providers", 
-                                                                         br(),
-                                                                         h4(strong("Indicator: County-Level Number of Mental Health Providers per 100,000 Population")),
-                                                                         p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                hr(),
+                
+                fluidRow(style = "margin: 6px",
+                         width = 12, 
+                         column(12, align = "left", 
+                                h3(strong("Explore Ranking Indicators")),
+                                p(),
+                                p(strong("Click on the tabs to explore the individual indicators we used to 
+                                         construct the selected relative accessibility measure."), "Each tab displays a 
+                                  box plot with descriptive statistics and a state map at county level for an individual indicator. 
+                                  The selection of indicators will update depending on the topic selected."))
+                                ),
+                
+                conditionalPanel("input.whichtopic == 'Remote work'",
+                                 fluidRow(style = "margin: 6px",
+                                          tabsetPanel(
+                                            tabPanel(title = "Households without broadband", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Broadband Internet")),
+                                                     p(),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_noint_work", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_noint_work", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Workers without computer", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28007&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28007, Labor force status by presence of a computer and types of internet subscription in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_nocomp_work", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_nocomp_work", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Non-remote workers in remote unfriendly occupations", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Occupations")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B08124%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20OCCUPATION&hidePreview=true&tid=ACSDT5Y2018.B08124', 'Table B08124, Means of transportation to work by occupation.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_occup", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_occup", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Non-remote workers in remote unfriendly industries", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Population in Labor Force not Working Remotely Employed in Remote Unfriendly Industries")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B08126%3A%20MEANS%20OF%20TRANSPORTATION%20TO%20WORK%20BY%20INDUSTRY&hidePreview=true&tid=ACSDT5Y2018.B08126&vintage=2018', 'Table B08126, Means of transportation to work by industry.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_industr", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_industr", width = "100%"))
+                                            )
+                                            )
+                                            )
+                ),
+                
+                conditionalPanel("input.whichtopic == 'Remote education'",
+                                 fluidRow(style = "margin: 6px",
+                                          tabsetPanel(
+                                            tabPanel(title = "Households without internet", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_noint_edu", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_noint_edu", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Youth without computer", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Youth (Age <18) Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28005&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28005, Age by presence of a computer and types of internet subscription in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_nocomp_edu", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_nocomp_edu", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Population in K-12", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Population Enrolled in K-12")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=B14001%3A%20SCHOOL%20ENROLLMENT%20BY%20LEVEL%20OF%20SCHOOL%20FOR%20THE%20POPULATION%203%20YEARS%20AND%20OVER&hidePreview=true&tid=ACSDT5Y2018.B14001&vintage=2018', 'Table B14001,	School enrollment by level of school for the population 3 years and over.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_ink12", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_ink12", width = "100%"))
+                                            )
+                                            )
+                                          )
+                         ),
+                
+                conditionalPanel("input.whichtopic == 'Telemental health'",
+                                 fluidRow(style = "margin: 6px",
+                                          tabsetPanel(
+                                            tabPanel(title = "Households without internet", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without Internet Access")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://factfinder.census.gov/faces/affhelp/jsf/pages/metadata.xhtml?lang=en&type=table&id=table.en.ACS_17_5YR_B28002', 'Table B28002, Presence and types of internet subscriptions in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_noint_med", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_noint_med", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Households without computer", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Households Without a Computer")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=computer&tid=ACSDT5Y2018.B28003&t=Telephone,%20Computer,%20and%20Internet%20Access&vintage=2018&d=ACS%205-Year%20Estimates%20Detailed%20Tables', 'Table B28003, Presence of a computer and type of internet subscription in household.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_nocomp_med", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_nocomp_med", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Population uninsured", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Percent Population Without Health Insurance")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the American Community Survey 2014/18 (5-year) estimates,", 
+                                                       a(href = 'https://data.census.gov/cedsci/table?q=coverage&tid=ACSDT5Y2018.B27020&d=ACS%205-Year%20Estimates%20Detailed%20Tables&vintage=2018', 'Table B27020, Health insurance coverage status and type by citizenship status.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_unins", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_unins", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Poor mental health days", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Average Number of Poor Mental Health Days in Past Month")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
+                                                       Data come from the Behavioral Risk Factor Surveillance System 2017 via CountyHealthRankings,", 
+                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-outcomes/quality-of-life/poor-mental-health-days', 'Average number of mentally unhealthy days reported in past 30 days (age-adjusted).', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_menthdays", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_poorment", width = "100%"))
+                                            ),
+                                            tabPanel(title = "Mental health providers", 
+                                                     br(),
+                                                     h4(strong("Indicator: County-Level Number of Mental Health Providers per 100,000 Population")),
+                                                     p("The box plot and map below provide a descriptive summary and visualization of data distribution for the selected indicator.
                                                        Data come from the CMS National Provider Identification 2019 via CountyHealthRankings,", 
-                                                                           a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/mental-health-providers', 'Number of mental health providers per 100,000 population.', target = "_blank")),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Box Plot"),
-                                                                                p(),
-                                                                                plotlyOutput("plotly_menthprov", width = "100%"),
-                                                                                p()),
-                                                                         column(6, align = "left",
-                                                                                p(),
-                                                                                strong("County-Level Map"),
-                                                                                p(),
-                                                                                leafletOutput("subplot_healthprov", width = "100%"))
-                                                                )
-                                                              )
-                                                     )
-                                    ),
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12,
-                                             column(6, align = "left",
-                                                    tags$em("How to interpret this box plot."),
-                                                    p("The box plot visualizes data distribution for the selected indicator. The bottom and top horizontal lines extending from the box represent the smallest and largest non-outlier values on the selected indicator.
+                                                       a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources/county-health-rankings-model/health-factors/clinical-care/access-to-care/mental-health-providers', 'Number of mental health providers per 100,000 population.', target = "_blank")),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Box Plot"),
+                                                            p(),
+                                                            plotlyOutput("plotly_menthprov", width = "100%"),
+                                                            p()),
+                                                     column(6, align = "left",
+                                                            p(),
+                                                            strong("County-Level Map"),
+                                                            p(),
+                                                            leafletOutput("subplot_healthprov", width = "100%"))
+                                            )
+                                            )
+                                            )
+                           ), 
+                
+                fluidRow(style = "margin: 6px",
+                         width = 12,
+                         column(6, align = "left",
+                                tags$em("How to interpret this box plot."),
+                                p("The box plot visualizes data distribution for the selected indicator. The bottom and top horizontal lines extending from the box represent the smallest and largest non-outlier values on the selected indicator.
                                   The bottom of the box represents the lower quartile; 25% of counties have indicator values below this threshold. Similarly, the top of the box represents the upper quartile, with 25% of counties having 
                                   indicator values above this threshold. The body of the box represents the interquartile range, capturing indicator values for 50% of all counties. The horizontal line drawn through the box is the median 
                                   -- the middle quartile or the midpoint value in the distribution. Half of all counties have indicator values below this threshold, and half have indicator values above the threshold.
                                   Dots represent counties with outlier values. Hover over the boxplot to view exact summary values.")),
-                                             column(6, align = "left",
-                                                    tags$em("How to interpret this map."),
-                                                    p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have higher values on the selected indicator. Conversely, counties with lighter colors have lower
+                         column(6, align = "left",
+                                tags$em("How to interpret this map."),
+                                p("The map visualizes values on the selected indicator at county level. Counties with darker map colors have higher values on the selected indicator. Conversely, counties with lighter colors have lower
                                   values on the selected indicator. To facilitate comparisons and display quintile cut-off points, map colors represent quintile-grouped values. To view the exact indicator value for a particular county, hover over the county on the map. The information
                                   box will display the county name, the indicator value rounded to two decimal points, and the corresponding quintile."))
-                                    )
-                           ),
-                           
-                           tabPanel(title = "Data, Measures, and Methods", 
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12, 
-                                             column(12, align = "left", 
-                                                    h3(strong("Data, Measures, and Methods"))
-                                             )
-                                    ),
-                                    
-                                    column(4, wellPanel(strong('Remote Work Accessibility'), 
-                                                        p(),
-                                                        em('Description.'),
-                                                        br(), tags$b('The remote work relative accessibility measure highlights counties where residents may have difficulty working remotely if instructed to do so.'),
-                                                        ('It conceptualizes four telecommunication infrastructure and employment characteristics as potential barriers, providing
-                                                a relative ranking of county telework preparedness.'),
-                                                        p(),
-                                                        em('How We Measure Remote Work Accessibility.'),
-                                                        br('We calculate remote work relative accessibility using information on percent:'),
-                                                        tags$li('Households with no broadband internet subscription.'),
-                                                        tags$li('Persons in labor force with no computer available.'),
-                                                        tags$li('Persons who are not currently working remotely and are employed in telework unfriendly occupations
-                                                       (service, natural, construction, maintenance, production, transportation, material moving, and military specific occupations).'),
-                                                        tags$li('Persons who are not currently working remotely and are employed in telework unfriendly industries 
-                                                       (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'),
-                                                        br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                  We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times. 
-                                                  The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote work accessibility:'),
-                                                        tags$li('Very high: 0 indicators.'),
-                                                        tags$li('High: 1 indicator.'),
-                                                        tags$li('Medium: 2 indicators.'), 
-                                                        tags$li('Low: 3 indicators.'),
-                                                        tags$li('Very low: all 4 indicators.'),
-                                                        p(),
-                                                        em('Data source.'),
-                                                        p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
-                                    )),                         
-                                    column(4, wellPanel(strong('Remote Education Accessibility'), 
-                                                        p(),
-                                                        em('Description.'),
-                                                        br(), tags$b('The remote education relative accessibility measure highlights counties where K-12 students may have difficulty participating in online education.'), 
-                                                        ('It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'),
-                                                        p(),
-                                                        em('How We Measure Remote Education Accessibility.'),
-                                                        br('We calculate remote education relative accessibility using information on percent:'),
-                                                        tags$li('Households with no internet access subscription.'),
-                                                        tags$li('Population under age 18 without a computer.'),
-                                                        tags$li('Population enrolled in K-12.'),
-                                                        br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                  We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
-                                                  The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote education accessibility:'),
-                                                        tags$li('High: 0 indicators.'),
-                                                        tags$li('Medium: 1 indicator.'),
-                                                        tags$li('Low: 2 indicators.'),
-                                                        tags$li('Very low: all 3 indicators.'),
-                                                        p(),
-                                                        em('Data source.'),
-                                                        p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates.")
-                                    )),
-                                    column(4, wellPanel(strong('Telemental Health Accessibility'), 
-                                                        p(),
-                                                        em('Description.'),
-                                                        br(), tags$b('The telemental health relative accessibility measure highlights counties where high need for mental health services is coupled with
-                                                            barriers to access.'), ('It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
-                                                                                    in providing a relative ranking of county K-12 telemental health accessibility.'),
-                                                        p(),
-                                                        em('How We Measure Telemental Health Accessibility.'),
-                                                        br('We calculate telemental health relative accessibility using information on:'),
-                                                        tags$li('Percent households without internet access.'),
-                                                        tags$li('Percent households with no computer.'),
-                                                        tags$li('Average number of poor mental health days in past month.'),
-                                                        tags$li('Number of mental health providers per 100,000 population (reverse-coded).'),
-                                                        tags$li('Percent population under age 65 without health insurance.'),
-                                                        br('We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-                                                 We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
-                                                 The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative telemental health accessibility:'),
-                                                        tags$li('Very high: 0 indicators.'),
-                                                        tags$li('High: 1 indicator.'),
-                                                        tags$li('Medium: 2 or 3 indicators.'),
-                                                        tags$li('Low: 4 indicators.'),
-                                                        tags$li('Very low: all 5 indicators'),
-                                                        p(),
-                                                        em('Data source.'),
-                                                        p(a(href = 'https://www.census.gov/programs-surveys/acs', 'American Community Survey', target = "_blank"), "2014/18 (5-year) estimates and",
-                                                          a(href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources', 'County Health Rankings', target = "_blank"), "2019.")
-                                    ))
-                           ),
-                           
-                           tabPanel(title = "More on Connectivity",
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12,
-                                             column(12,
-                                                    h3(strong("More on Internet Connectivity")),
-                                                    p()
-                                             )
-                                    ),
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12,
-                                             column(4,
-                                                    img(src = "bb1.png", width = "100%", style = "text-align: left; border: solid 1px lightgrey;")
-                                             ),
-                                             column(8,
-                                                    wellPanel(
-                                                      p(),
-                                                      p(tags$b("Internet connectivity is a crucial factor in our relative accessibility measures."), 
-                                                        "Internet at broadband speeds—defined as 25mbps download and 3mbps upload—is still not available 
-                                                         to many Americans. However, estimates differ on how many individuals are without access to broadband and thus are limited in their ability to participate in today’s increasingly online world. 
-                                                         To better understand US broadband coverage and where estimates disagree, our related project examines three publicly available broadband data sources: the Federal Communications Commission (FCC) data, 
-                                                         American Community Survey (ACS) data, and Microsoft (MS) Airband Initiative data. We aim to understand the extent of coverage according to each dataset, to examine discrepancies between the ACS and 
-                                                         Microsoft with FCC data as the source used for policy and funding decision-making, and to address these aims with particular attention to rural areas."),
-                                                      p("We invite you to explore our", a(href = 'https://bband.policy-analytics.net', 'broadband internet data source comparison dashboard.', target = "_blank"), "The dashboard visualizes discrepancies between FCC-reported broadband availability and ACS-reported broadband subscription at census block 
-                                                        group and census tract levels, and the discrepancies between FCC-reported broadband availability and MS-reported broadband usage at the county level. Maps, details about our data sources, and measure descriptions are available on the dashboard website.")
-                                                    )
-                                             )
-                                    )
-                           ),
-                           
-                           tabPanel(title = "Acknowledgments and Contact",
-                                    
-                                    fluidRow(style = "margin: 6px",
-                                             width = 12, 
-                                             column(12, align = "left", 
-                                                    h3(strong("Acknowledgments and Contact"))
-                                             )
-                                    ),
-                                    
-                                    column(6, align = "left",
-                                           wellPanel(
-                                             strong("Acknowledgments"),
-                                             br(),
-                                             br("We used the quintile method described by the", a(href = "https://pcrd.purdue.edu/blog/remote-work-and-the-coronavirus.php", "Purdue Center for Regional Development"), 
-                                                "to construct our relative accessibility measures. One of our indicators, remote work accessibility, is also an adaptation of Purdue's remote work metric. 
-                                               We depart from their operationalization in using American Community Survey instead of Federal Communications Commission (FCC) data given", a(href = "https://bband.policy-analytics.net", "known issues with FCC Form 477"),
-                                                ", as well as in tailoring indicators used to the population in the labor force and to the labor force population that reports not already working from home.")
-                                           )
-                                    ),
-                                    column(6, align = "center",
-                                           wellPanel(align = "left",
-                                                     strong("Contact"),
-                                                     br(),
-                                                     br(a(href = "https://biocomplexity.virginia.edu/teja-pristavec", "Teja Pristavec, PhD")),
-                                                     p("Social and Decision Analytics Division, Biocomplexity Institute and Initiative, University of Virginia")
-                                           ),
-                                           a(href = "https://biocomplexity.virginia.edu/social-decision-analytics", img(src = "uva.png", width = "60%", style = "text-align: center; border: solid 1px white;"), target = "_blank")
-                                    )
-                           )
+                                ),
+                
+                hr(),
+                
+                fluidRow(style = "margin: 20px",
+                         width = 12, 
+                         column(6, align = "center",
+                                h2("Acknowledgments"),
+                                br("We used the quintile method described by the", a(href = "https://pcrd.purdue.edu/blog/remote-work-and-the-coronavirus.php", "Purdue Center for Regional Development"), 
+                                   "to construct our relative accessibility measures. One of our indicators, remote work accessibility, is also an adaptation of Purdue's remote work metric. 
+                                   We depart from their operationalization in using American Community Survey instead of Federal Communications Commission (FCC) data given", a(href = "https://bband.policy-analytics.net", "known issues with FCC Form 477"),
+                                   ", as well as in tailoring indicators used to the population in the labor force and to the labor force population that reports not already working from home.")
+                         ),
+                         column(6, align = "center",
+                                h2("Contact"),
+                                br(a(href = "https://biocomplexity.virginia.edu/teja-pristavec", "Teja Pristavec, PhD")),
+                                br(a(href = "https://biocomplexity.virginia.edu/social-decision-analytics", "Social and Decision Analytics Division", target = "_blank"),
+                                   br("Biocomplexity Institute and Initiative, University of Virginia")
+                                )
                          )
-                ),
+                         ),
                 
                 hr(),
                 
@@ -541,7 +497,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                 em('Last updated: June 2020'))
                 )
                 
-)
+                )
 
 
 #
