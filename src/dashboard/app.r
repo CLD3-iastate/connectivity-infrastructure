@@ -43,13 +43,11 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 ),
                 
                 fluidRow(width = 12, 
-                         stype = "padding-top:20px; padding-bottom:20px",
+                         style = "padding-top:20px; padding-bottom:20px;",
                          column(1),
                          column(10, align = "center", h2(strong("Connectivity Infrastructure as Barrier to Remote Work, Education, and Mental Health Care: County Explorer"))),
                          column(1)
                 ),
-                
-                hr(),
                 
                 fluidRow(width = 12,
                          column(1),
@@ -75,7 +73,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 ),
                 
                 
-                fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px",
+                fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
                          tabsetPanel(
                            tabPanel(title = "Relative Accessibility Maps and Indicators",
                                     
@@ -482,9 +480,6 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                     
                                     fluidRow(style = "margin: 6px",
                                              width = 12,
-                                             column(4,
-                                                    img(src = "bb1.png", width = "100%", style = "text-align: left; border: solid 1px lightgrey;")
-                                             ),
                                              column(8,
                                                     wellPanel(
                                                       p(),
@@ -497,6 +492,9 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                       p("We invite you to explore our", a(href = 'https://bband.policy-analytics.net', 'broadband internet data source comparison dashboard.', target = "_blank"), "The dashboard visualizes discrepancies between FCC-reported broadband availability and ACS-reported broadband subscription at census block 
                                                         group and census tract levels, and the discrepancies between FCC-reported broadband availability and MS-reported broadband usage at the county level. Maps, details about our data sources, and measure descriptions are available on the dashboard website.")
                                                     )
+                                             ),
+                                             column(4,
+                                                    a(href = "http://bband.policy-analytics.net", img(src = "bb1.png", width = "100%", style = "text-align: left; border: solid 1px lightgrey;"), target = "_blank")
                                              )
                                     )
                            ),
@@ -538,7 +536,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 fluidRow(style = "margin: 20px",
                          width = 12, 
                          column(12, align = 'center',
-                                em('Last updated: June 2020'))
+                                tags$small(em('Social and Decision Analytics Division, Biocomplexity Institute and Initiative, University of Virginia')),
+                                p(tags$small(em('Last updated: June 2020'))))
                 )
                 
 )
