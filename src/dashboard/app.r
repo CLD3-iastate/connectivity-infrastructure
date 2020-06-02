@@ -47,16 +47,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          column(1),
                          column(10, align = "center", h2(strong("Connectivity Infrastructure as Barrier to Remote Work, Education, and Mental Health Care: County Explorer"))),
                          column(1)
-                ),
-                
-                fluidRow(width = 12,
-                         column(1),
-                         column(10, align = 'center',
-                                em('This dashboard was created at the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative,
-                                   University of Virginia.')
-                         ),
-                         column(1)
-                ),
+                ), 
                 
                 fluidRow(width = 12,
                          column(1),
