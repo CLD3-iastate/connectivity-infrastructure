@@ -19,25 +19,63 @@ data_med <- data_med %>% mutate(avgquint = (nointernetQuint + nocomputerQuint + 
 # Rescale
 data_edu <- data_edu %>% mutate(r_avgquint = rescale(avgquint),
                                 r_scoretop = rescale(scoreTop))
+data_edu <- data_edu %>% group_by(STATEFP) %>%
+                         mutate(norm_avgquint = scale(avgquint),
+                               norm_scoretop = scale(scoreTop)) %>%
+                         ungroup()
+data_edu <- data_edu %>% mutate(normresc_avgquint = rescale(norm_avgquint),
+                                normresc_scoretop = rescale(norm_scoretop))
+
 data_work <- data_work %>% mutate(r_avgquint = rescale(avgquint),
                                 r_scoretop = rescale(scoreTop))
+data_work <- data_work %>% group_by(STATEFP) %>%
+                           mutate(norm_avgquint = scale(avgquint),
+                                  norm_scoretop = scale(scoreTop)) %>%
+                           ungroup()
+data_work <- data_work %>% mutate(normresc_avgquint = rescale(norm_avgquint),
+                                  normresc_scoretop = rescale(norm_scoretop))
+
 data_med <- data_med %>% mutate(r_avgquint = rescale(avgquint),
-                                  r_scoretop = rescale(scoreTop))
+                                r_scoretop = rescale(scoreTop))
+data_med <- data_med %>% group_by(STATEFP) %>%
+                         mutate(norm_avgquint = scale(avgquint),
+                                norm_scoretop = scale(scoreTop)) %>%
+                         ungroup()
+data_med <- data_med %>% mutate(normresc_avgquint = rescale(norm_avgquint),
+                                normresc_scoretop = rescale(norm_scoretop))
 
 # Compare
 hist(data_edu$avgquint)
 hist(data_edu$scoreTop)
+hist(data_edu$r_avgquint)
+hist(data_edu$r_scoretop)
+hist(data_edu$norm_avgquint)
+hist(data_edu$norm_scoretop)
+hist(data_edu$normresc_avgquint)
+hist(data_edu$normresc_scoretop)
 
 hist(data_work$avgquint)
 hist(data_work$scoreTop)
+hist(data_work$r_avgquint)
+hist(data_work$r_scoretop)
+hist(data_work$norm_avgquint)
+hist(data_work$norm_scoretop)
+hist(data_work$normresc_avgquint)
+hist(data_work$normresc_scoretop)
 
 hist(data_med$avgquint)
 hist(data_med$scoreTop)
+hist(data_med$r_avgquint)
+hist(data_med$r_scoretop)
+hist(data_med$norm_avgquint)
+hist(data_med$norm_scoretop)
+hist(data_med$normresc_avgquint)
+hist(data_med$normresc_scoretop)
 
 # Plot
 # OREGON TELEWORK
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 41, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_work[data_work$STATEFP == 41, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Oregon Telework Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -52,7 +90,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 41, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_work[data_work$STATEFP == 41, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Oregon Telework Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -67,7 +105,7 @@ ggplot() +
 
 # IOWA TELEWORK
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 19, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_work[data_work$STATEFP == 19, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Iowa Telework Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -82,7 +120,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 19, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_work[data_work$STATEFP == 19, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Iowa Telework Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -97,7 +135,7 @@ ggplot() +
 
 # VIRGINIA TELEWORK
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 51, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_work[data_work$STATEFP == 51, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Virginia Telework Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -112,7 +150,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_work[data_work$STATEFP == 51, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_work[data_work$STATEFP == 51, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Virginia Telework Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -128,7 +166,7 @@ ggplot() +
 
 # IOWA REMOTE ED
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 19, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 19, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Iowa Remote Ed Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -143,7 +181,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 19, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 19, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Iowa Remote Ed Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -158,7 +196,7 @@ ggplot() +
 
 # OREGON REMOTE ED
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 41, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 41, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Oregon Remote Ed Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -173,7 +211,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 41, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 41, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Oregon Remote Ed Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -188,7 +226,7 @@ ggplot() +
 
 # VIRGINIA REMOTE ED
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 51, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 51, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Virginia Remote Ed Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -203,7 +241,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_edu[data_edu$STATEFP == 51, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_edu[data_edu$STATEFP == 51, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Virginia Remote Ed Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -219,7 +257,7 @@ ggplot() +
 
 # VIRGINIA TELEHEALTH
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 51, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_med[data_med$STATEFP == 51, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Virginia Telehealth Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -234,7 +272,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 51, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_med[data_med$STATEFP == 51, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Virginia Telehealth Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -249,7 +287,7 @@ ggplot() +
 
 # OREGON TELEHEALTH
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 41, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_med[data_med$STATEFP == 41, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Oregon Telehealth Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -264,7 +302,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 41, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_med[data_med$STATEFP == 41, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Oregon Telehealth Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -279,7 +317,7 @@ ggplot() +
 
 # IOWA TELEHEALTH
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 19, ], size = 0.2, aes(fill = r_scoretop)) +
+  geom_sf(data = data_med[data_med$STATEFP == 19, ], size = 0.2, aes(fill = normresc_scoretop)) +
   labs(title = "Iowa Telehealth Vulnerability: Top Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
@@ -294,7 +332,7 @@ ggplot() +
 
 # Plot
 ggplot() +
-  geom_sf(data = data_med[data_med$STATEFP == 19, ], size = 0.2, aes(fill = r_avgquint)) +
+  geom_sf(data = data_med[data_med$STATEFP == 19, ], size = 0.2, aes(fill = normresc_avgquint)) +
   labs(title = "Iowa Telehealth Vulnerability: Average Quintile", 
        caption = "Data source: American Community Survey 2014-18 (5-year) estimates.") +
   theme_map() +
