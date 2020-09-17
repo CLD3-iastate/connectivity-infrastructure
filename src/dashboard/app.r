@@ -39,7 +39,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 
                 fluidRow(width = 12,
                          align = "center",
-                         img(src = "logo.jpg", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
+                         img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
                 ),
                 
                 fluidRow(width = 12, 
