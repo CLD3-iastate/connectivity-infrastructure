@@ -19,9 +19,9 @@ library(plotly)
 # Load data ---------------------------------------------
 #
 
-data_med <- read_rds("~/Git/gates/rivanna_data/working/dashboard/data_med.Rds")
-data_work <- read_rds("~/Git/gates/rivanna_data/working/dashboard/data_work.Rds")
-data_edu <- read_rds("~/Git/gates/rivanna_data/working/dashboard/data_edu.Rds")
+data_med <- read_rds("data/data_med.Rds")
+data_work <- read_rds("data/data_work.Rds")
+data_edu <- read_rds("data/data_edu.Rds")
 
 
 #
