@@ -61,6 +61,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                          align = "center",
                          div(class = "logo", style = "margin-top: 30px; margin-bottom: -20px;")
                          #img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
+                         #a(href = "https://datascienceforthepublicgood.org/economic-mobility", img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;"))
+
                 ),
                 
                 fluidRow(width = 12, 
