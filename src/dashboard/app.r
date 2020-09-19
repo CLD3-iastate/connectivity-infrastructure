@@ -13,7 +13,12 @@ library(ggthemes)
 library(sf)
 library(RColorBrewer)
 library(plotly)
-
+library(acs)
+library(XML)
+library(UpSetR)
+library(naniar)
+library(visdat)
+library(shinyjs)
 
 #
 # Load data ---------------------------------------------
@@ -24,11 +29,26 @@ data_work <- read_rds("data/data_work.Rds")
 data_edu <- read_rds("data/data_edu.Rds")
 
 
+jscode <- "var referer = document.referrer;
+           var n = referer.includes('datascience');
+           var x = document.getElementsByClassName('logo');
+           if (n == true) {
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
+                              '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2020 Symposium Proceedings\", style=\"height:82px;\">' +
+                             '</a>';
+           } else {
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/economic-mobility/community-insights\">' +
+                              '<img src=\"AEMLogoGatesColorsBlack-11.png\", alt=\"Gates Economic Mobility Case Studies\", style=\"height:82px;\">' +
+                              '</a>';
+           }
+           "
+
 #
 # User interface ---------------------------------------------
 #
 
 ui <- fluidPage(theme = shinytheme("cosmo"),
+                useShinyjs(),
                 
                 tags$style(type = "text/css",
                            ".recalculating {opacity: 1.0;}"
@@ -39,7 +59,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 
                 fluidRow(width = 12,
                          align = "center",
-                         img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
+                         div(class = "logo", style = "margin-top: 30px; margin-bottom: -20px;")
+                         #img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
                 ),
                 
                 fluidRow(width = 12, 
@@ -539,7 +560,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
 #
 
 server <- function(input, output) {
-  
+  # Run JavaScript Code
+  runjs(jscode)
   #
   # Plotly boxplots ------------------------------------------
   # 
