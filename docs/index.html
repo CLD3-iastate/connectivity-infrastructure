@@ -6,7 +6,8 @@
   <body>
     <script>
       function redirectFunc() {
-        window.location.assign("https://dads2busy.shinyapps.io/gates/");
+        uri = "https://dads2busy.shinyapps.io/gates/" + window.location.search;
+        window.location.assign(uri);
       }
       redirectFunc();
       // setTimeout("redirectFunc()", 2000);
