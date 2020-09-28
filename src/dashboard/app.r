@@ -13,7 +13,12 @@ library(ggthemes)
 library(sf)
 library(RColorBrewer)
 library(plotly)
-
+library(acs)
+library(XML)
+library(UpSetR)
+library(naniar)
+library(visdat)
+library(shinyjs)
 
 #
 # Load data ---------------------------------------------
@@ -24,11 +29,26 @@ data_work <- read_rds("data/data_work.Rds")
 data_edu <- read_rds("data/data_edu.Rds")
 
 
+jscode <- "var referer = document.referrer;
+           var n = referer.includes('datascience');
+           var x = document.getElementsByClassName('logo');
+           if (n == true) {
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/events/symposium2020/poster-sessions\">' +
+                              '<img src=\"DSPG_black-01.png\", alt=\"DSPG 2020 Symposium Proceedings\", style=\"height:82px;\">' +
+                             '</a>';
+           } else {
+             x[0].innerHTML = '<a href=\"https://datascienceforthepublicgood.org/economic-mobility/community-insights/case-studies\">' +
+                              '<img src=\"AEMLogoGatesColorsBlack-11.png\", alt=\"Gates Economic Mobility Case Studies\", style=\"height:82px;\">' +
+                              '</a>';
+           }
+           "
+
 #
 # User interface ---------------------------------------------
 #
 
 ui <- fluidPage(theme = shinytheme("cosmo"),
+                useShinyjs(),
                 
                 tags$style(type = "text/css",
                            ".recalculating {opacity: 1.0;}"
@@ -39,7 +59,10 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                 
                 fluidRow(width = 12,
                          align = "center",
-                         a(href = "https://datascienceforthepublicgood.org/economic-mobility", img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;"))
+                         div(class = "logo", style = "margin-top: 30px; margin-bottom: -20px;")
+                         #img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;")
+                         #a(href = "https://datascienceforthepublicgood.org/economic-mobility", img(src = "logo.png", class = "topimage", width = "40%", style = "display: block; margin-left: auto; margin-right: auto;"))
+
                 ),
                 
                 fluidRow(width = 12, 
@@ -480,7 +503,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                          To better understand US broadband coverage and where estimates disagree, our related project examines three publicly available broadband data sources: the Federal Communications Commission (FCC) data, 
                                                          American Community Survey (ACS) data, and Microsoft (MS) Airband Initiative data. We aim to understand the extent of coverage according to each dataset, to examine discrepancies between the ACS and 
                                                          Microsoft with FCC data as the source used for policy and funding decision-making, and to address these aims with particular attention to rural areas."),
-                                                      p("We invite you to explore our", a(href = 'https://bband.policy-analytics.net', 'broadband internet data source comparison dashboard.', target = "_blank"), "The dashboard visualizes discrepancies between FCC-reported broadband availability and ACS-reported broadband subscription at census block 
+                                                      p("We invite you to explore our", a(href = 'https://dspgtools.shinyapps.io/bband', 'broadband internet data source comparison dashboard.', target = "_blank"), "The dashboard visualizes discrepancies between FCC-reported broadband availability and ACS-reported broadband subscription at census block 
                                                         group and census tract levels, and the discrepancies between FCC-reported broadband availability and MS-reported broadband usage at the county level. Maps, details about our data sources, and measure descriptions are available on the dashboard website.")
                                                     )
                                              ),
@@ -539,7 +562,8 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
 #
 
 server <- function(input, output) {
-  
+  # Run JavaScript Code
+  runjs(jscode)
   #
   # Plotly boxplots ------------------------------------------
   # 

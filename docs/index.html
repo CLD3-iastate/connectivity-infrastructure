@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title of the document</title>
+  </head>
+  <body>
+    <script>
+      function redirectFunc() {
+        uri = "https://dspgtools.shinyapps.io/gates/" + window.location.search;
+        window.location.assign(uri);
+      }
+      redirectFunc();
+      // setTimeout("redirectFunc()", 2000);
+    </script>
+  </body>
+</html>
