@@ -74,7 +74,7 @@ ui <- fluidPage(theme = shinytheme("cosmo"),
                                                     h3(strong("Relative Accessibility Maps")),
                                                     p(),
                                                     p(strong("Select a state and topic using the map selector."), 
-                                                      "The resulting maps will display the relative accesibility of remote work, remote education, and telemental health at county-level.",
+                                                      "The resulting maps will display the relative accessibility of remote work, remote education, and telemental health at county-level.",
                                                       "Select the Data and Methods tab to learn more about how we constructed our composite measures."))
                                     ),
                                     
